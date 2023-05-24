@@ -1,0 +1,22 @@
+name: ''
+environment: ''
+seed: ''
+pvp: true
+disable:
+  physicals:
+    FARMLAND: true
+    TURTLE_EGG: true
+  spawn:
+    PHANTOM: false
+  block-form:
+    PLAYER: false
+    PRIMED_TNT: false
+    CREEPER: false
+    ENDER_DRAGON: true
+    ENDER_CRYSTAL: true
+    FIREBALL: true
+    SMALL_FIREBALL: true
+    RAVAGER: true
+    WARDEN: true
+    WITHER: true
+    WITHER_SKULL: true
