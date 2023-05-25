@@ -23,11 +23,11 @@ public class Create extends WorldSubCommand {
         if (args.length == 2) {
             message.send(sender,"&cusage: &f/world create world normal");
         } else if (args.length == 3) {
-            if (World.Environment.valueOf(args[2]).equals(World.Environment.valueOf(args[2]))) {
+            if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
                 if (!worldConfig.folderExist(args[1])) {
                     message.send(sender,args[1] + "&6 is about to be created");
-                    worldConfig.create(args[1], World.Environment.valueOf(args[2]));
-                    message.send(sender,args[1] + "&6 created with environment &f" + World.Environment.valueOf(args[2]).toString().toLowerCase());
+                    worldConfig.create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
+                    message.send(sender,args[1] + "&6 created with environment &f" + World.Environment.valueOf(args[2].toUpperCase()).toString().toLowerCase());
                 } else {
                     message.send(sender,args[1] + "&c already exist");
                 }
@@ -35,7 +35,5 @@ public class Create extends WorldSubCommand {
                 message.send(sender,"&cYou have to add&f environment&c to create your world");
             }
         }
-    }
-    private void createWorld(CommandSender sender, String worldName, World.Environment environment) {
     }
 }

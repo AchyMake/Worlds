@@ -55,7 +55,7 @@ public class WorldConfig {
             }
         } else {
             folder.mkdirs();
-            for (World world : Worlds.getInstance().getServer().getWorlds()) {
+            for (World world : worlds.getServer().getWorlds()) {
                 File file = new File(worlds.getDataFolder(), "worlds/" + worlds.getName() + ".yml");
                 if (!file.exists()) {
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
