@@ -40,6 +40,7 @@ public final class Worlds extends JavaPlugin {
         message = new Message(this);
         worldConfig = new WorldConfig(this);
         worldConfig.setup();
+        reload();
         getCommand("world").setExecutor(new WorldCommand());
         new PlayerBedEnter(this);
         new BlockBreak(this);
@@ -88,7 +89,6 @@ public final class Worlds extends JavaPlugin {
         return worldConfig;
     }
     public void reload() {
-        worldConfig.reload();
         if (configFile.exists()) {
             try {
                 getConfig().load(configFile);
