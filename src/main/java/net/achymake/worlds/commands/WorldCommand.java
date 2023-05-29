@@ -55,12 +55,12 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             commands.add("teleport");
         }
         if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("edit")){
-                for (Player players : sender.getServer().getOnlinePlayers()){
+            if (args[0].equalsIgnoreCase("edit")) {
+                for (Player players : sender.getServer().getOnlinePlayers()) {
                     commands.add(players.getName());
                 }
-            }else{
-                for (World worlds : sender.getServer().getWorlds()){
+            } else {
+                for (World worlds : sender.getServer().getWorlds()) {
                     commands.add(worlds.getName());
                 }
             }
@@ -80,33 +80,37 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 commands.add("events");
                 commands.add("physicals");
                 commands.add("spawn");
+                commands.add("redstone");
             }
             if (args[0].equalsIgnoreCase("pvp")) {
                 commands.add("true");
                 commands.add("false");
             }
             if (args[0].equalsIgnoreCase("gamerule")) {
-                for (String gamerules : sender.getServer().getWorld(args[1]).getGameRules()){
+                for (String gamerules : sender.getServer().getWorld(args[1]).getGameRules()) {
                     commands.add(gamerules);
                 }
             }
         }
         if (args.length == 4) {
-            if (args[0].equalsIgnoreCase("disable")){
-                if (args[2].equalsIgnoreCase("events")){
-                    for (EntityType entityType : EntityType.values()){
+            if (args[0].equalsIgnoreCase("disable")) {
+                if (args[2].equalsIgnoreCase("events")) {
+                    for (EntityType entityType : EntityType.values()) {
                         commands.add(entityType.toString().toLowerCase());
                     }
                 }
-                if (args[2].equalsIgnoreCase("physicals")){
-                    for (Material material : Material.values()){
+                if (args[2].equalsIgnoreCase("physicals")) {
+                    for (Material material : Material.values()) {
                         commands.add(material.toString().toLowerCase());
                     }
                 }
-                if (args[2].equalsIgnoreCase("spawn")){
-                    for (EntityType entityType : EntityType.values()){
+                if (args[2].equalsIgnoreCase("spawn")) {
+                    for (EntityType entityType : EntityType.values()) {
                         commands.add(entityType.toString().toLowerCase());
                     }
+                }
+                if (args[2].equalsIgnoreCase("redstone")) {
+                    commands.add(String.valueOf(worldConfig.isRedstoneCancelled(args[1])));
                 }
             }
             if (args[0].equalsIgnoreCase("gamerule")) {
