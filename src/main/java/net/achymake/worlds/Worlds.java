@@ -1,13 +1,11 @@
 package net.achymake.worlds;
 
+import net.achymake.worlds.api.Metrics;
 import net.achymake.worlds.commands.WorldCommand;
 import net.achymake.worlds.files.Message;
 import net.achymake.worlds.files.WorldConfig;
 import net.achymake.worlds.listeners.bed.PlayerBedEnter;
-import net.achymake.worlds.listeners.block.BlockBreak;
-import net.achymake.worlds.listeners.block.BlockFertilize;
-import net.achymake.worlds.listeners.block.BlockPlace;
-import net.achymake.worlds.listeners.block.HarvestBlock;
+import net.achymake.worlds.listeners.block.*;
 import net.achymake.worlds.listeners.bucket.BucketEmpty;
 import net.achymake.worlds.listeners.bucket.BucketEntity;
 import net.achymake.worlds.listeners.bucket.BucketFill;
@@ -33,19 +31,21 @@ public final class Worlds extends JavaPlugin {
     private static Worlds instance;
     private static WorldConfig worldConfig;
     private static Message message;
-    private final File configFile = new File(getDataFolder(), "config.yml");
+    private static Metrics metrics;
     @Override
     public void onEnable() {
         instance = this;
         message = new Message(this);
         worldConfig = new WorldConfig(this);
         worldConfig.setup();
+        metrics = new Metrics(this, 18611);
         reload();
         getCommand("world").setExecutor(new WorldCommand());
         new PlayerBedEnter(this);
         new BlockBreak(this);
         new BlockFertilize(this);
         new BlockPlace(this);
+        new BlockRedstone(this);
         new HarvestBlock(this);
         new BucketEmpty(this);
         new BucketEntity(this);
@@ -80,6 +80,7 @@ public final class Worlds extends JavaPlugin {
         if (worldConfig.getWorldEditors().isEmpty()) {
             worldConfig.getWorldEditors().clear();
         }
+        metrics.shutdown();
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static Message getMessage() {
@@ -89,9 +90,9 @@ public final class Worlds extends JavaPlugin {
         return worldConfig;
     }
     public void reload() {
-        if (configFile.exists()) {
+        if (new File(getDataFolder(), "config.yml").exists()) {
             try {
-                getConfig().load(configFile);
+                getConfig().load(new File(getDataFolder(), "config.yml"));
                 getConfig().options().copyDefaults(true);
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {

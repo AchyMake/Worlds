@@ -20,7 +20,7 @@ public class InteractBlocks implements Listener {
         if (worldConfig.getWorldEditors().contains(event.getPlayer()))return;
         if (event.getClickedBlock() == null)return;
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
-        if (!worldConfig.isEntityCancelled(event.getPlayer().getWorld().getName(),event.getPlayer().getType()))return;
+        if (!worldConfig.isEntityCancelled(event.getPlayer().getWorld().getName(), event.getPlayer().getType()))return;
         if (Tag.ANVIL.isTagged(event.getClickedBlock().getType()))return;
         if (Tag.STAIRS.isTagged(event.getClickedBlock().getType()))return;
         if (Tag.DOORS.isTagged(event.getClickedBlock().getType()))return;

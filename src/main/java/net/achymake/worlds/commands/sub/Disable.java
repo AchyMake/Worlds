@@ -22,16 +22,24 @@ public class Disable extends WorldSubCommand {
         if (args.length == 5) {
             if (worldConfig.worldExist(args[1])) {
                 if (args[2].equalsIgnoreCase("events")) {
-                    worldConfig.setBoolean(args[1],"disable."+args[2]+"."+args[3].toUpperCase(),Boolean.valueOf(args[4]));
+                    worldConfig.setBoolean(args[1], "disable." + args[2] + "." + args[3].toUpperCase(), Boolean.valueOf(args[4]));
                     message.send(sender, args[1] + "&6 disable&f " + args[3] + " " + args[2] + "&6 is set to&f " + args[4]);
                 }
                 if (args[2].equalsIgnoreCase("physicals")) {
-                    worldConfig.setBoolean(args[1],"disable."+args[2]+"."+args[3].toUpperCase(),Boolean.valueOf(args[4]));
+                    worldConfig.setBoolean(args[1], "disable." + args[2] + "." + args[3].toUpperCase(), Boolean.valueOf(args[4]));
                     message.send(sender, args[1] + "&6 disable&f " + args[3] + " " + args[2] + "&6 is set to&f " + args[4]);
                 }
                 if (args[2].equalsIgnoreCase("spawn")) {
-                    worldConfig.setBoolean(args[1],"disable."+args[2]+"."+args[3].toUpperCase(),Boolean.valueOf(args[4]));
+                    worldConfig.setBoolean(args[1], "disable." + args[2] + "." + args[3].toUpperCase(), Boolean.valueOf(args[4]));
                     message.send(sender, args[1] + "&6 disable&f " + args[3] + " " + args[2] + "&6 is set to&f " + args[4]);
+                }
+            }
+        }
+        if (args.length == 4) {
+            if (worldConfig.worldExist(args[1])) {
+                if (args[2].equalsIgnoreCase("redstone")) {
+                    worldConfig.setBoolean(args[1], "disable.redstone", Boolean.valueOf(args[3]));
+                    message.send(sender, args[1] + "&6 disable&f " + args[2] + "&6 is set to&f " + args[3]);
                 }
             }
         }

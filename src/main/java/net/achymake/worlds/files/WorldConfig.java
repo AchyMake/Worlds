@@ -129,6 +129,9 @@ public class WorldConfig {
     public boolean isSpawnCancelled(String worldName, EntityType entityType) {
         return get(worldName).getBoolean("disable.spawn." + entityType.toString());
     }
+    public boolean isRedstoneCancelled(String worldName) {
+        return get(worldName).getBoolean("disable.redstone");
+    }
     public void setBoolean(String worldName, String type, Boolean value) {
         File file = new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);

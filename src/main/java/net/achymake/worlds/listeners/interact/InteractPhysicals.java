@@ -17,7 +17,7 @@ public class InteractPhysicals implements Listener {
     public void onInteractPhysicals(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null)return;
         if (!event.getAction().equals(Action.PHYSICAL))return;
-        if (!worldConfig.isPhysicalsCancelled(event.getClickedBlock().getWorld().getName(),event.getClickedBlock().getType().toString()))return;
+        if (!worldConfig.isPhysicalsCancelled(event.getClickedBlock().getWorld().getName(), event.getClickedBlock().getType().toString()))return;
         event.setCancelled(true);
     }
 }

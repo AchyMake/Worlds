@@ -6,7 +6,7 @@
 
     <groupId>net.achymake</groupId>
     <artifactId>Worlds</artifactId>
-    <version>1.10.2</version>
+    <version>1.10.3</version>
     <packaging>jar</packaging>
 
     <name>Worlds</name>

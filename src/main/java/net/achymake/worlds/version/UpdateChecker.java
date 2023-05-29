@@ -11,14 +11,15 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class UpdateChecker {
-    private final Worlds plugin;
+    private final Worlds worlds;
     private final int resourceId;
-    public UpdateChecker(Worlds plugin, int resourceId) {
-        this.plugin = plugin;
+    public UpdateChecker(Worlds worlds, int resourceId) {
+        this.worlds = worlds;
         this.resourceId = resourceId;
     }
+    private final Message message = Worlds.getMessage();
     public void getVersion(Consumer<String> consumer) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+        worlds.getServer().getScheduler().runTaskAsynchronously(worlds, () -> {
             try {
                 InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId)).openStream();
                 Scanner scanner = new Scanner(inputStream);
@@ -30,28 +31,28 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Worlds.getMessage().sendLog(e.getMessage());
+                message.sendLog(e.getMessage());
             }
         });
     }
     public void getUpdate() {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
-                if (plugin.getDescription().getVersion().equals(latest)) {
-                    Worlds.getMessage().sendLog("You are using the latest version");
+        if (worlds.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(worlds, resourceId)).getVersion((latest) -> {
+                if (worlds.getDescription().getVersion().equals(latest)) {
+                    message.sendLog("You are using the latest version");
                 } else {
-                    Worlds.getMessage().sendLog("New Update: " + latest);
-                    Worlds.getMessage().sendLog("Current Version: " + plugin.getDescription().getVersion());
+                    message.sendLog("New Update: " + latest);
+                    message.sendLog("Current Version: " + worlds.getDescription().getVersion());
                 }
             });
         }
     }
     public void sendMessage(Player player) {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
-                if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Worlds.getMessage().send(player,"&6" + plugin.getName() + " Update:&f " + latest);
-                    Worlds.getMessage().send(player,"&6Current Version: &f" + plugin.getDescription().getVersion());
+        if (worlds.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(worlds, resourceId)).getVersion((latest) -> {
+                if (!worlds.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                    message.send(player,"&6" + worlds.getName() + " Update:&f " + latest);
+                    message.send(player,"&6Current Version: &f" + worlds.getDescription().getVersion());
                 }
             });
         }
