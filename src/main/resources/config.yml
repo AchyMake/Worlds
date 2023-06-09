@@ -1,39 +1,3 @@
 notify-update:
   # Notifies Plugin Updates
   enable: true
-is-hostile:
-  CAVE_SPIDER: true
-  ENDERMAN: true
-  PIGLIN: true
-  SPIDER: true
-  ZOMBIFIED_PIGLIN: true
-  BLAZE: true
-  CREEPER: true
-  DROWNED: true
-  ELDER_GUARDIAN: true
-  ENDERMITE: true
-  EVOKER: true
-  GHAST: true
-  GUARDIAN: true
-  HOGLIN: true
-  HUSK: true
-  MAGMA_CUBE: true
-  PHANTOM: true
-  PIGLIN_BRUTE: true
-  PILLAGER: true
-  RAVAGER: true
-  SHULKER: true
-  SILVERFISH: true
-  SKELETON: true
-  SLIME: true
-  STRAY: true
-  VEX: true
-  VINDICATOR: true
-  WARDEN: true
-  WITCH: true
-  WITHER_SKELETON: true
-  ZOGLIN: true
-  ZOMBIE: true
-  ZOMBIE_VILLAGER: true
-  ENDER_DRAGON: true
-  WITHER: true

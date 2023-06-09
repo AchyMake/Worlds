@@ -1,4 +1,4 @@
-package net.achymake.worlds.listeners.damage;
+package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import org.bukkit.entity.EntityType;

@@ -1,23 +1,23 @@
-package net.achymake.worlds.listeners.damage;
+package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Trident;
+import org.bukkit.entity.SpectralArrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class DamagePlayerWithTrident implements Listener {
-    public DamagePlayerWithTrident(Worlds worlds){
+public class DamagePlayerWithSpectralArrow implements Listener {
+    public DamagePlayerWithSpectralArrow(Worlds worlds){
         worlds.getServer().getPluginManager().registerEvents(this, worlds);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayerWithTrident (EntityDamageByEntityEvent event){
-        if (!event.getDamager().getType().equals(EntityType.TRIDENT))return;
+    public void onDamagePlayerWithSpectralArrow (EntityDamageByEntityEvent event){
+        if (!event.getDamager().getType().equals(EntityType.SPECTRAL_ARROW))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
-        Trident damager = (Trident) event.getDamager();
+        SpectralArrow damager = (SpectralArrow) event.getDamager();
         if (damager.getShooter() instanceof Player){
             Player player = (Player) damager.getShooter();
             if (Worlds.getWorldConfig().isPVP(player.getWorld().getName()))return;

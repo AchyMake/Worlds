@@ -6,7 +6,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -64,18 +63,6 @@ public class WorldConfig {
                     config.addDefault("environment", world.getEnvironment().toString());
                     config.addDefault("seed", world.getSeed());
                     config.addDefault("pvp", true);
-                    config.addDefault("disable.physicals.FARMLAND", true);
-                    config.addDefault("disable.physicals.TURTLE_EGG", true);
-                    config.addDefault("disable.events.SHEEP", true);
-                    config.addDefault("disable.events.ENDERMAN", true);
-                    config.addDefault("disable.events.ENDER_DRAGON", true);
-                    config.addDefault("disable.events.WITHER", true);
-                    config.addDefault("disable.events.WITHER_SKULL", true);
-                    config.addDefault("disable.events.RAVAGER", true);
-                    config.addDefault("disable.events.WARDEN", true);
-                    config.addDefault("disable.events.CREEPER", true);
-                    config.addDefault("disable.events.PRIMED_TNT", true);
-                    config.addDefault("disable.events.MINECART_TNT", true);
                     config.options().copyDefaults(true);
                     try {
                         config.save(file);
@@ -97,18 +84,6 @@ public class WorldConfig {
         config.addDefault("environment", worldCreator.environment().toString());
         config.addDefault("seed", worldCreator.seed());
         config.addDefault("pvp", true);
-        config.addDefault("disable.physicals.FARMLAND", true);
-        config.addDefault("disable.physicals.TURTLE_EGG", true);
-        config.addDefault("disable.events.SHEEP", true);
-        config.addDefault("disable.events.ENDERMAN", true);
-        config.addDefault("disable.events.ENDER_DRAGON", true);
-        config.addDefault("disable.events.WITHER", true);
-        config.addDefault("disable.events.WITHER_SKULL", true);
-        config.addDefault("disable.events.RAVAGER", true);
-        config.addDefault("disable.events.WARDEN", true);
-        config.addDefault("disable.events.CREEPER", true);
-        config.addDefault("disable.events.PRIMED_TNT", true);
-        config.addDefault("disable.events.MINECART_TNT", true);
         config.options().copyDefaults(true);
         try {
             config.save(file);
@@ -120,15 +95,6 @@ public class WorldConfig {
     }
     public boolean isPVP(String worldName) {
         return get(worldName).getBoolean("pvp");
-    }
-    public boolean isPhysicalsCancelled(String worldName, String materialType) {
-        return get(worldName).getBoolean("disable.physicals." + materialType);
-    }
-    public boolean isEntityCancelled(String worldName, EntityType entityType) {
-        return get(worldName).getBoolean("disable.events." + entityType.toString());
-    }
-    public boolean isSpawnCancelled(String worldName, EntityType entityType) {
-        return get(worldName).getBoolean("disable.spawn." + entityType.toString());
     }
     public boolean isRedstoneCancelled(String worldName) {
         return get(worldName).getBoolean("disable.redstone");

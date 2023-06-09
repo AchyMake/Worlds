@@ -1,4 +1,4 @@
-package net.achymake.worlds.listeners.connection;
+package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.version.UpdateChecker;

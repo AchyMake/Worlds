@@ -1,4 +1,4 @@
-package net.achymake.worlds.listeners.damage;
+package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import org.bukkit.entity.EntityType;
@@ -9,20 +9,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class DamageEntityWithTrident implements Listener {
-    public DamageEntityWithTrident(Worlds worlds) {
+public class DamagePlayerWithTrident implements Listener {
+    public DamagePlayerWithTrident(Worlds worlds){
         worlds.getServer().getPluginManager().registerEvents(this, worlds);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamageEntityWithTrident (EntityDamageByEntityEvent event) {
+    public void onDamagePlayerWithTrident (EntityDamageByEntityEvent event){
         if (!event.getDamager().getType().equals(EntityType.TRIDENT))return;
-        if (event.getEntity().getType().equals(EntityType.PLAYER))return;
+        if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Trident damager = (Trident) event.getDamager();
-        if (damager.getShooter() instanceof Player) {
+        if (damager.getShooter() instanceof Player){
             Player player = (Player) damager.getShooter();
-            if (!Worlds.getWorldConfig().isEntityCancelled(event.getEntity().getWorld().getName(), player.getType()))return;
-            if (Worlds.getWorldConfig().getWorldEditors().contains(player))return;
-            if (Worlds.getInstance().getConfig().getBoolean("is-hostile." + event.getEntity().getType()))return;
+            if (Worlds.getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);
         }
     }
