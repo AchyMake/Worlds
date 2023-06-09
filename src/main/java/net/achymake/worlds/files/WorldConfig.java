@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class WorldConfig {
     private File dataFolder;
@@ -39,16 +40,16 @@ public class WorldConfig {
                     File worldFolder = new File(Worlds.getInstance().getServer().getWorldContainer(), worldName);
                     if (Worlds.getInstance().getServer().getWorld(worldName) == null) {
                         if (worldFolder.exists()) {
-                            message.sendLog("creating " + worldName);
+                            message.sendLog(Level.INFO, "creating " + worldName);
                             FileConfiguration configuration = YamlConfiguration.loadConfiguration(files);
                             WorldCreator worldCreator = new WorldCreator(worldName);
                             worldCreator.environment(World.Environment.valueOf(configuration.getString("environment")));
                             worldCreator.seed(configuration.getLong("seed"));
                             worldCreator.createWorld();
-                            message.sendLog(worldName+" has been created with " + configuration.getString("environment") + " environment");
+                            message.sendLog(Level.INFO, worldName+" has been created with " + configuration.getString("environment") + " environment");
                         } else {
                             files.delete();
-                            message.sendLog(worldName + " does not exist " + files.getName() + " has been deleted");
+                            message.sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
                         }
                     }
                 }
@@ -79,7 +80,7 @@ public class WorldConfig {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        message.sendLog(e.getMessage());
+                        message.sendLog(Level.WARNING, e.getMessage());
                     }
                 }
             }
@@ -112,7 +113,7 @@ public class WorldConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            message.sendLog(e.getMessage());
+            message.sendLog(Level.WARNING, e.getMessage());
         }
         worldCreator.environment(environment);
         worldCreator.createWorld();
@@ -140,14 +141,14 @@ public class WorldConfig {
             try {
                 config.save(file);
             } catch (IOException e) {
-                message.sendLog(e.getMessage());
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         } else {
             config.set(type, null);
             try {
                 config.save(file);
             } catch (IOException e) {
-                message.sendLog(e.getMessage());
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         }
     }
@@ -158,7 +159,7 @@ public class WorldConfig {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            message.sendLog(e.getMessage());
+            message.sendLog(Level.WARNING, e.getMessage());
         }
     }
     public void reload() {
@@ -169,7 +170,7 @@ public class WorldConfig {
                 config.load(file);
                 config.save(file);
             } catch (IOException | InvalidConfigurationException e) {
-                message.sendLog(e.getMessage());
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         }
     }
