@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 public class UpdateChecker {
     private final Worlds worlds;
@@ -31,7 +32,7 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                message.sendLog(e.getMessage());
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         });
     }
@@ -39,10 +40,10 @@ public class UpdateChecker {
         if (worlds.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(worlds, resourceId)).getVersion((latest) -> {
                 if (worlds.getDescription().getVersion().equals(latest)) {
-                    message.sendLog("You are using the latest version");
+                    message.sendLog(Level.INFO, "You are using the latest version");
                 } else {
-                    message.sendLog("New Update: " + latest);
-                    message.sendLog("Current Version: " + worlds.getDescription().getVersion());
+                    message.sendLog(Level.INFO, "New Update: " + latest);
+                    message.sendLog(Level.INFO, "Current Version: " + worlds.getDescription().getVersion());
                 }
             });
         }

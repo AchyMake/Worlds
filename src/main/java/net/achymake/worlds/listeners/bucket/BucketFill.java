@@ -8,14 +8,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 public class BucketFill implements Listener {
-    private final WorldConfig worldConfig = Worlds.getWorldConfig();
     public BucketFill(Worlds worlds) {
         worlds.getServer().getPluginManager().registerEvents(this, worlds);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketFill(PlayerBucketFillEvent event) {
-        if (worldConfig.getWorldEditors().contains(event.getPlayer()))return;
-        if (!worldConfig.isEntityCancelled(event.getBlockClicked().getWorld().getName(),event.getPlayer().getType()))return;
+        if (!Worlds.getWorldConfig().isEntityCancelled(event.getBlockClicked().getWorld().getName(),event.getPlayer().getType()))return;
+        if (Worlds.getWorldConfig().getWorldEditors().contains(event.getPlayer()))return;
         event.setCancelled(true);
     }
 }

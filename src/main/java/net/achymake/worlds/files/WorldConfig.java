@@ -15,29 +15,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldConfig {
-    private final Worlds worlds;
-    public WorldConfig (Worlds worlds) {
-        this.worlds = worlds;
+    private File dataFolder;
+    public WorldConfig (File dataFolder) {
+        this.dataFolder = dataFolder;
     }
     private final Message message = Worlds.getMessage();
     private static final List<Player> worldEditors = new ArrayList<>();
     public boolean fileExist(String worldName) {
-        return new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml").exists();
+        return new File(dataFolder, "worlds/" + worldName + ".yml").exists();
     }
     public boolean folderExist(String worldName) {
-        return new File(worlds.getServer().getWorldContainer(), worldName).exists();
+        return new File(Worlds.getInstance().getServer().getWorldContainer(), worldName).exists();
     }
     public boolean worldExist(String worldName) {
-        return worlds.getServer().getWorld(worldName) != null;
+        return Worlds.getInstance().getServer().getWorld(worldName) != null;
     }
     public void setup() {
-        File folder = new File(worlds.getDataFolder(), "worlds");
+        File folder = new File(dataFolder, "worlds");
         if (folder.exists()) {
             if (folder.list().length > 0) {
                 for (File files : folder.listFiles()) {
                     String worldName = files.getName().replace(".yml", "");
-                    File worldFolder = new File(worlds.getServer().getWorldContainer(), worldName);
-                    if (worlds.getServer().getWorld(worldName) == null) {
+                    File worldFolder = new File(Worlds.getInstance().getServer().getWorldContainer(), worldName);
+                    if (Worlds.getInstance().getServer().getWorld(worldName) == null) {
                         if (worldFolder.exists()) {
                             message.sendLog("creating " + worldName);
                             FileConfiguration configuration = YamlConfiguration.loadConfiguration(files);
@@ -55,8 +55,8 @@ public class WorldConfig {
             }
         } else {
             folder.mkdirs();
-            for (World world : worlds.getServer().getWorlds()) {
-                File file = new File(worlds.getDataFolder(), "worlds/" + world.getName() + ".yml");
+            for (World world : Worlds.getInstance().getServer().getWorlds()) {
+                File file = new File(dataFolder, "worlds/" + world.getName() + ".yml");
                 if (!file.exists()) {
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                     config.addDefault("name", world.getName());
@@ -86,10 +86,10 @@ public class WorldConfig {
         }
     }
     public FileConfiguration get(String worldName) {
-        return YamlConfiguration.loadConfiguration(new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml"));
+        return YamlConfiguration.loadConfiguration(new File(dataFolder, "worlds/" + worldName + ".yml"));
     }
     public void create(String worldName, World.Environment environment) {
-        File file = new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml");
+        File file = new File(dataFolder, "worlds/" + worldName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         WorldCreator worldCreator = new WorldCreator(worldName);
         config.addDefault("name", worldName);
@@ -133,7 +133,7 @@ public class WorldConfig {
         return get(worldName).getBoolean("disable.redstone");
     }
     public void setBoolean(String worldName, String type, Boolean value) {
-        File file = new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml");
+        File file = new File(dataFolder, "worlds/" + worldName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         if (value) {
             config.set(type, true);
@@ -152,7 +152,7 @@ public class WorldConfig {
         }
     }
     public void setPVP(String worldName, boolean value) {
-        File file = new File(worlds.getDataFolder(), "worlds/" + worldName + ".yml");
+        File file = new File(dataFolder, "worlds/" + worldName + ".yml");
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
         configuration.set("pvp", value);
         try {
@@ -162,13 +162,11 @@ public class WorldConfig {
         }
     }
     public void reload() {
-        File folder = new File(worlds.getDataFolder(), "worlds");
-        for (String files : folder.list()) {
-            File file = new File(worlds.getDataFolder(), "worlds/" + files);
+        for (String files : new File(dataFolder, "worlds").list()) {
+            File file = new File(dataFolder, "worlds/" + files);
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             try {
                 config.load(file);
-                config.options().copyDefaults(true);
                 config.save(file);
             } catch (IOException | InvalidConfigurationException e) {
                 message.sendLog(e.getMessage());

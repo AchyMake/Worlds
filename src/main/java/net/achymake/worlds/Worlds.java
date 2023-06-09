@@ -1,6 +1,5 @@
 package net.achymake.worlds;
 
-import net.achymake.worlds.api.Metrics;
 import net.achymake.worlds.commands.WorldCommand;
 import net.achymake.worlds.files.Message;
 import net.achymake.worlds.files.WorldConfig;
@@ -16,7 +15,6 @@ import net.achymake.worlds.listeners.entity.*;
 import net.achymake.worlds.listeners.interact.InteractBlocks;
 import net.achymake.worlds.listeners.interact.InteractEntity;
 import net.achymake.worlds.listeners.interact.InteractPhysicals;
-import net.achymake.worlds.listeners.interact.InteractPhysicalsDisabled;
 import net.achymake.worlds.listeners.leash.PlayerLeashEntity;
 import net.achymake.worlds.listeners.mount.EntityMount;
 import net.achymake.worlds.listeners.shear.ShearEntity;
@@ -26,19 +24,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public final class Worlds extends JavaPlugin {
     private static Worlds instance;
     private static WorldConfig worldConfig;
     private static Message message;
-    private static Metrics metrics;
     @Override
     public void onEnable() {
         instance = this;
         message = new Message(this);
-        worldConfig = new WorldConfig(this);
+        worldConfig = new WorldConfig(getDataFolder());
         worldConfig.setup();
-        metrics = new Metrics(this, 18611);
         reload();
         getCommand("world").setExecutor(new WorldCommand());
         new PlayerBedEnter(this);
@@ -68,11 +65,10 @@ public final class Worlds extends JavaPlugin {
         new InteractBlocks(this);
         new InteractEntity(this);
         new InteractPhysicals(this);
-        new InteractPhysicalsDisabled(this);
         new PlayerLeashEntity(this);
         new EntityMount(this);
         new ShearEntity(this);
-        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
         new UpdateChecker(this, 106196).getUpdate();
     }
     @Override
@@ -80,8 +76,7 @@ public final class Worlds extends JavaPlugin {
         if (worldConfig.getWorldEditors().isEmpty()) {
             worldConfig.getWorldEditors().clear();
         }
-        metrics.shutdown();
-        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static Message getMessage() {
         return message;
@@ -90,13 +85,13 @@ public final class Worlds extends JavaPlugin {
         return worldConfig;
     }
     public void reload() {
-        if (new File(getDataFolder(), "config.yml").exists()) {
+        File file = new File(getDataFolder(), "config.yml");
+        if (file.exists()) {
             try {
-                getConfig().load(new File(getDataFolder(), "config.yml"));
-                getConfig().options().copyDefaults(true);
+                getConfig().load(file);
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
-                message.sendLog(e.getMessage());
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         } else {
             getConfig().options().copyDefaults(true);
