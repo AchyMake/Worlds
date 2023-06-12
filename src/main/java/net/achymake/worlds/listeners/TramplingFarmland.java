@@ -21,7 +21,7 @@ public class TramplingFarmland implements Listener {
         if (!event.getAction().equals(Action.PHYSICAL))return;
         if (event.getClickedBlock() == null)return;
         if (!event.getClickedBlock().getType().equals(Material.FARMLAND))return;
-        if (!getConfig().getBoolean("prevent-trampling-FARMLAND"))return;
+        if (!getConfig().getBoolean("prevent-trampling-farmland"))return;
         event.setCancelled(true);
     }
 }

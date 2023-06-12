@@ -21,7 +21,7 @@ public class TramplingTurtleEgg implements Listener {
         if (!event.getAction().equals(Action.PHYSICAL))return;
         if (event.getClickedBlock() == null)return;
         if (!event.getClickedBlock().getType().equals(Material.TURTLE_EGG))return;
-        if (!getConfig().getBoolean("prevent-trampling-FARMLAND"))return;
+        if (!getConfig().getBoolean("prevent-trampling-turtle-egg"))return;
         event.setCancelled(true);
     }
 }
