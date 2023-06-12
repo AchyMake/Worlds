@@ -1,6 +1,7 @@
 package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
+import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -10,6 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamagePlayerWithSnowball implements Listener {
+    private WorldConfig getWorldConfig() {
+        return Worlds.getWorldConfig();
+    }
     public DamagePlayerWithSnowball(Worlds worlds){
         worlds.getServer().getPluginManager().registerEvents(this, worlds);
     }
@@ -20,7 +24,7 @@ public class DamagePlayerWithSnowball implements Listener {
         Snowball snowball = (Snowball) event.getDamager();
         if (snowball.getShooter() instanceof Player){
             Player player = (Player) snowball.getShooter();
-            if (Worlds.getWorldConfig().isPVP(player.getWorld().getName()))return;
+            if (getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);
         }
     }

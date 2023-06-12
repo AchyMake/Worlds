@@ -14,8 +14,17 @@ import java.util.logging.Level;
 
 public final class Worlds extends JavaPlugin {
     private static Worlds instance;
-    private static WorldConfig worldConfig;
+    public static Worlds getInstance() {
+        return instance;
+    }
     private static Message message;
+    public static Message getMessage() {
+        return message;
+    }
+    private static WorldConfig worldConfig;
+    public static WorldConfig getWorldConfig() {
+        return worldConfig;
+    }
     @Override
     public void onEnable() {
         instance = this;
@@ -24,6 +33,7 @@ public final class Worlds extends JavaPlugin {
         worldConfig.setup();
         reload();
         getCommand("world").setExecutor(new WorldCommand());
+        new BlockRedstone(this);
         new NotifyUpdate(this);
         new DamagePlayer(this);
         new DamagePlayerWithArrow(this);
@@ -31,6 +41,8 @@ public final class Worlds extends JavaPlugin {
         new DamagePlayerWithSpectralArrow(this);
         new DamagePlayerWithThrownPotion(this);
         new DamagePlayerWithTrident(this);
+        new TramplingFarmland(this);
+        new TramplingTurtleEgg(this);
         message.sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
         new UpdateChecker(this, 106196).getUpdate();
     }
@@ -40,12 +52,6 @@ public final class Worlds extends JavaPlugin {
             worldConfig.getWorldEditors().clear();
         }
         message.sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
-    }
-    public static Message getMessage() {
-        return message;
-    }
-    public static WorldConfig getWorldConfig() {
-        return worldConfig;
     }
     public void reload() {
         File file = new File(getDataFolder(), "config.yml");
@@ -60,8 +66,6 @@ public final class Worlds extends JavaPlugin {
             getConfig().options().copyDefaults(true);
             saveConfig();
         }
-    }
-    public static Worlds getInstance() {
-        return instance;
+        worldConfig.reload();
     }
 }

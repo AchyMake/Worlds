@@ -19,7 +19,9 @@ public class WorldConfig {
     public WorldConfig (File dataFolder) {
         this.dataFolder = dataFolder;
     }
-    private final Message message = Worlds.getMessage();
+    private Message getMessage() {
+        return Worlds.getMessage();
+    }
     private static final List<Player> worldEditors = new ArrayList<>();
     public boolean fileExist(String worldName) {
         return new File(dataFolder, "worlds/" + worldName + ".yml").exists();
@@ -39,16 +41,16 @@ public class WorldConfig {
                     File worldFolder = new File(Worlds.getInstance().getServer().getWorldContainer(), worldName);
                     if (Worlds.getInstance().getServer().getWorld(worldName) == null) {
                         if (worldFolder.exists()) {
-                            message.sendLog(Level.INFO, "creating " + worldName);
+                            getMessage().sendLog(Level.INFO, "creating " + worldName);
                             FileConfiguration configuration = YamlConfiguration.loadConfiguration(files);
                             WorldCreator worldCreator = new WorldCreator(worldName);
                             worldCreator.environment(World.Environment.valueOf(configuration.getString("environment")));
                             worldCreator.seed(configuration.getLong("seed"));
                             worldCreator.createWorld();
-                            message.sendLog(Level.INFO, worldName+" has been created with " + configuration.getString("environment") + " environment");
+                            getMessage().sendLog(Level.INFO, worldName+" has been created with " + configuration.getString("environment") + " environment");
                         } else {
                             files.delete();
-                            message.sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
+                            getMessage().sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
                         }
                     }
                 }
@@ -67,7 +69,7 @@ public class WorldConfig {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        message.sendLog(Level.WARNING, e.getMessage());
+                        getMessage().sendLog(Level.WARNING, e.getMessage());
                     }
                 }
             }
@@ -88,35 +90,13 @@ public class WorldConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            message.sendLog(Level.WARNING, e.getMessage());
+            getMessage().sendLog(Level.WARNING, e.getMessage());
         }
         worldCreator.environment(environment);
         worldCreator.createWorld();
     }
     public boolean isPVP(String worldName) {
         return get(worldName).getBoolean("pvp");
-    }
-    public boolean isRedstoneCancelled(String worldName) {
-        return get(worldName).getBoolean("disable.redstone");
-    }
-    public void setBoolean(String worldName, String type, Boolean value) {
-        File file = new File(dataFolder, "worlds/" + worldName + ".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (value) {
-            config.set(type, true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(Level.WARNING, e.getMessage());
-            }
-        } else {
-            config.set(type, null);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                message.sendLog(Level.WARNING, e.getMessage());
-            }
-        }
     }
     public void setPVP(String worldName, boolean value) {
         File file = new File(dataFolder, "worlds/" + worldName + ".yml");
@@ -125,18 +105,18 @@ public class WorldConfig {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            message.sendLog(Level.WARNING, e.getMessage());
+            getMessage().sendLog(Level.WARNING, e.getMessage());
         }
     }
     public void reload() {
-        for (String files : new File(dataFolder, "worlds").list()) {
-            File file = new File(dataFolder, "worlds/" + files);
-            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        File folder = new File(dataFolder, "worlds");
+        for (File files : folder.listFiles()) {
+            FileConfiguration config = YamlConfiguration.loadConfiguration(files);
             try {
-                config.load(file);
-                config.save(file);
+                config.load(files);
+                config.save(files);
             } catch (IOException | InvalidConfigurationException e) {
-                message.sendLog(Level.WARNING, e.getMessage());
+                getMessage().sendLog(Level.WARNING, e.getMessage());
             }
         }
     }

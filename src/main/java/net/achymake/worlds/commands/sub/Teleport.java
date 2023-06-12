@@ -9,8 +9,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Teleport extends WorldSubCommand {
-    private final WorldConfig worldConfig = Worlds.getWorldConfig();
-    private final Message message = Worlds.getMessage();
+    private WorldConfig getWorldConfig() {
+        return Worlds.getWorldConfig();
+    }
+    private Message getMessage() {
+        return Worlds.getMessage();
+    }
     public String getName() {
         return "teleport";
     }
@@ -24,16 +28,16 @@ public class Teleport extends WorldSubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
-                message.send(player, "&cusage: &f/world teleport world");
+                getMessage().send(player, "&cusage: &f/world teleport world");
             }
             if (args.length == 2) {
                 String worldName = args[1];
                 Server server = player.getServer();
-                if (worldConfig.worldExist(worldName)) {
+                if (getWorldConfig().worldExist(worldName)) {
                     player.teleport(server.getWorld(worldName).getSpawnLocation().add(0.5, 0.0, 0.5));
-                    message.send(player,"&6Teleporting to &f" + worldName);
+                    getMessage().send(player,"&6Teleporting to &f" + worldName);
                 } else {
-                    message.send(player,worldName + "&c does not exist");
+                    getMessage().send(player,worldName + "&c does not exist");
                 }
             }
         }

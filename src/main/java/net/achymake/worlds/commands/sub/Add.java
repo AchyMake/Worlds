@@ -8,8 +8,12 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
 public class Add extends WorldSubCommand {
-    private final WorldConfig worldConfig = Worlds.getWorldConfig();
-    private final Message message = Worlds.getMessage();
+    private WorldConfig getWorldConfig() {
+        return Worlds.getWorldConfig();
+    }
+    private Message getMessage() {
+        return Worlds.getMessage();
+    }
     public String getName() {
         return "add";
     }
@@ -21,21 +25,21 @@ public class Add extends WorldSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 2) {
-            message.send(sender,"&cusage: &f/world add world normal");
+            getMessage().send(sender,"&cusage: &f/world add world normal");
         }
         if (args.length == 3) {
             if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
-                if (worldConfig.folderExist(args[1])) {
-                    if (!worldConfig.worldExist(args[1])) {
-                        message.send(sender, args[1] + "&6 is about to be added");
-                        worldConfig.create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
-                        message.send(sender, args[1] + "&6 is added with environment &f" + World.Environment.valueOf(args[2].toUpperCase()).name().toLowerCase());
+                if (getWorldConfig().folderExist(args[1])) {
+                    if (!getWorldConfig().worldExist(args[1])) {
+                        getMessage().send(sender, args[1] + "&6 is about to be added");
+                        getWorldConfig().create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
+                        getMessage().send(sender, args[1] + "&6 is added with environment &f" + World.Environment.valueOf(args[2].toUpperCase()).name().toLowerCase());
                     } else {
-                        message.send(sender, args[1] + "&c already exist");
+                        getMessage().send(sender, args[1] + "&c already exist");
                     }
                 }
             } else {
-                message.send(sender,"&cYou have to add&f environment&c to add your world");
+                getMessage().send(sender,"&cYou have to add&f environment&c to add your world");
             }
         }
     }

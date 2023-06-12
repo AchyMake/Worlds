@@ -8,8 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PVP extends WorldSubCommand {
-    private final WorldConfig worldConfig = Worlds.getWorldConfig();
-    private final Message message = Worlds.getMessage();
+    private WorldConfig getWorldConfig() {
+        return Worlds.getWorldConfig();
+    }
+    private Message getMessage() {
+        return Worlds.getMessage();
+    }
     public String getName() {
         return "pvp";
     }
@@ -24,36 +28,36 @@ public class PVP extends WorldSubCommand {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 String worldName = player.getWorld().getName();
-                if (worldConfig.worldExist(worldName)) {
-                    worldConfig.setPVP(worldName, !worldConfig.isPVP(worldName));
-                    if (worldConfig.isPVP(worldName)){
-                        message.send(sender, worldName + "&6 is now pvp mode");
+                if (getWorldConfig().worldExist(worldName)) {
+                    getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
+                    if (getWorldConfig().isPVP(worldName)){
+                        getMessage().send(sender, worldName + "&6 is now pvp mode");
                     } else {
-                        message.send(sender, worldName + "&6 is no longer pvp mode");
+                        getMessage().send(sender, worldName + "&6 is no longer pvp mode");
                     }
                 }
             }
         }
         if (args.length == 2) {
             String worldName = args[1];
-            if (worldConfig.worldExist(worldName)) {
-                worldConfig.setPVP(worldName, !worldConfig.isPVP(worldName));
-                if (worldConfig.isPVP(worldName)) {
-                    message.send(sender, worldName + "&6 is now pvp mode");
+            if (getWorldConfig().worldExist(worldName)) {
+                getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
+                if (getWorldConfig().isPVP(worldName)) {
+                    getMessage().send(sender, worldName + "&6 is now pvp mode");
                 } else {
-                    message.send(sender, worldName + "&6 is no longer pvp mode");
+                    getMessage().send(sender, worldName + "&6 is no longer pvp mode");
                 }
             }
         }
         if (args.length == 3) {
             String worldName = args[1];
             boolean value = Boolean.valueOf(args[2]);
-            if (worldConfig.worldExist(worldName)) {
-                worldConfig.setPVP(worldName, value);
-                if (worldConfig.isPVP(worldName)) {
-                    message.send(sender, worldName + "&6 is now pvp mode");
+            if (getWorldConfig().worldExist(worldName)) {
+                getWorldConfig().setPVP(worldName, value);
+                if (getWorldConfig().isPVP(worldName)) {
+                    getMessage().send(sender, worldName + "&6 is now pvp mode");
                 } else {
-                    message.send(sender, worldName + "&6 is no longer pvp mode");
+                    getMessage().send(sender, worldName + "&6 is no longer pvp mode");
                 }
             }
         }
