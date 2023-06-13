@@ -1,6 +1,3 @@
 notify-update:
   # Notifies Plugin Updates
   enable: true
-prevent-trampling-farmland: true
-prevent-trampling-turtle-egg: true
-prevent-redstone: false

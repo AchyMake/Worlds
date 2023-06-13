@@ -11,21 +11,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WorldCommand implements CommandExecutor, TabCompleter {
-    private final ArrayList<WorldSubCommand> worldSubCommands = new ArrayList<>();
-    public WorldCommand() {
-        this.worldSubCommands.add(new Add());
-        this.worldSubCommands.add(new Create());
-        this.worldSubCommands.add(new Gamerule());
-        this.worldSubCommands.add(new PVP());
-        this.worldSubCommands.add(new Reload());
-        this.worldSubCommands.add(new Remove());
-        this.worldSubCommands.add(new Setspawn());
-        this.worldSubCommands.add(new Teleport());
+public class MainCommand implements CommandExecutor, TabCompleter {
+    private final ArrayList<MainSubCommand> mainSubCommands = new ArrayList<>();
+    public MainCommand() {
+        this.mainSubCommands.add(new Add());
+        this.mainSubCommands.add(new Create());
+        this.mainSubCommands.add(new Gamerule());
+        this.mainSubCommands.add(new PVP());
+        this.mainSubCommands.add(new Reload());
+        this.mainSubCommands.add(new Remove());
+        this.mainSubCommands.add(new Setspawn());
+        this.mainSubCommands.add(new Teleport());
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0){
-            for (WorldSubCommand commands : worldSubCommands){
+            for (MainSubCommand commands : mainSubCommands){
                 if (args[0].equalsIgnoreCase(commands.getName())){
                     commands.perform(sender,args);
                 }

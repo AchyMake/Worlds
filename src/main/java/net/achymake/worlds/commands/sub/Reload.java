@@ -1,11 +1,11 @@
 package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
-import net.achymake.worlds.commands.WorldSubCommand;
+import net.achymake.worlds.commands.MainSubCommand;
 import net.achymake.worlds.files.Message;
 import org.bukkit.command.CommandSender;
 
-public class Reload extends WorldSubCommand {
+public class Reload extends MainSubCommand {
     private Worlds getPlugin() {
         return Worlds.getInstance();
     }

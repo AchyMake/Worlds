@@ -1,6 +1,6 @@
 package net.achymake.worlds;
 
-import net.achymake.worlds.commands.WorldCommand;
+import net.achymake.worlds.commands.MainCommand;
 import net.achymake.worlds.files.Message;
 import net.achymake.worlds.files.WorldConfig;
 import net.achymake.worlds.listeners.*;
@@ -32,8 +32,7 @@ public final class Worlds extends JavaPlugin {
         worldConfig = new WorldConfig(getDataFolder());
         worldConfig.setup();
         reload();
-        getCommand("world").setExecutor(new WorldCommand());
-        new BlockRedstone(this);
+        getCommand("worlds").setExecutor(new MainCommand());
         new NotifyUpdate(this);
         new DamagePlayer(this);
         new DamagePlayerWithArrow(this);
@@ -41,8 +40,6 @@ public final class Worlds extends JavaPlugin {
         new DamagePlayerWithSpectralArrow(this);
         new DamagePlayerWithThrownPotion(this);
         new DamagePlayerWithTrident(this);
-        new TramplingFarmland(this);
-        new TramplingTurtleEgg(this);
         message.sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
         new UpdateChecker(this, 106196).getUpdate();
     }

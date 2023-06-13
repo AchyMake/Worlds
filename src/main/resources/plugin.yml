@@ -3,14 +3,14 @@ version: '${project.version}'
 main: net.achymake.worlds.Worlds
 api-version: 1.19
 author: AchyMake
+load: POSTWORLD
 prefix: '${project.name}'
 description: '${project.description}'
-load: POSTWORLD
 commands:
-  world:
+  worlds:
     description: add or create worlds
     permission: worlds.command
-    usage: /world
+    usage: /worlds
 permissions:
   worlds.command:
     default: op

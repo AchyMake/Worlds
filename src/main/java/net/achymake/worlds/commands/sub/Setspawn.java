@@ -1,13 +1,12 @@
 package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
-import net.achymake.worlds.commands.WorldSubCommand;
+import net.achymake.worlds.commands.MainSubCommand;
 import net.achymake.worlds.files.Message;
-import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Setspawn extends WorldSubCommand {
+public class Setspawn extends MainSubCommand {
     private Message getMessage() {
         return Worlds.getMessage();
     }
