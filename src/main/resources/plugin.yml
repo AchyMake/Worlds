@@ -1,7 +1,7 @@
 name: Worlds
 version: '${project.version}'
 main: net.achymake.worlds.Worlds
-api-version: 1.19
+api-version: 1.13
 author: AchyMake
 load: POSTWORLD
 prefix: '${project.name}'
