@@ -110,7 +110,7 @@ public class WorldConfig {
             FileConfiguration config = YamlConfiguration.loadConfiguration(files);
             try {
                 config.load(files);
-                getMessage().sendLog(Level.INFO, "reloaded " + files.getName() + " file");
+                getMessage().sendLog(Level.INFO, "reloaded " + files.getName());
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
