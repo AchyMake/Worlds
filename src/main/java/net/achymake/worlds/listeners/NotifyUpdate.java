@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class NotifyUpdate implements Listener {
-    public NotifyUpdate(Worlds worlds) {
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public NotifyUpdate(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onNotifyUpdate(PlayerJoinEvent event) {

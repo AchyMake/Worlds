@@ -39,7 +39,7 @@ public class Add extends MainSubCommand {
                     }
                 }
             } else {
-                getMessage().send(sender,"&cYou have to add&f environment&c to add your world");
+                getMessage().send(sender, "&cYou have to add&f environment&c to add your world");
             }
         }
     }

@@ -14,15 +14,15 @@ public class DamagePlayerWithSpectralArrow implements Listener {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    public DamagePlayerWithSpectralArrow(Worlds worlds){
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public DamagePlayerWithSpectralArrow(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayerWithSpectralArrow (EntityDamageByEntityEvent event){
+    public void onDamagePlayerWithSpectralArrow (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.SPECTRAL_ARROW))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         SpectralArrow damager = (SpectralArrow) event.getDamager();
-        if (damager.getShooter() instanceof Player){
+        if (damager.getShooter() instanceof Player) {
             Player player = (Player) damager.getShooter();
             if (getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);

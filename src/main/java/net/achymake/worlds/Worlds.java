@@ -6,6 +6,7 @@ import net.achymake.worlds.files.WorldConfig;
 import net.achymake.worlds.listeners.*;
 import net.achymake.worlds.version.UpdateChecker;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -17,6 +18,10 @@ public final class Worlds extends JavaPlugin {
     public static Worlds getInstance() {
         return instance;
     }
+    private static FileConfiguration configuration;
+    public static FileConfiguration getConfiguration() {
+        return configuration;
+    }
     private static Message message;
     public static Message getMessage() {
         return message;
@@ -25,14 +30,25 @@ public final class Worlds extends JavaPlugin {
     public static WorldConfig getWorldConfig() {
         return worldConfig;
     }
-    @Override
-    public void onEnable() {
+    private void start() {
         instance = this;
-        message = new Message(this);
+        configuration = getConfig();
+        message = new Message(getLogger());
         worldConfig = new WorldConfig(getDataFolder());
-        worldConfig.setup();
+        getWorldConfig().setup();
         reload();
+        commands();
+        events();
+        getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
+        new UpdateChecker(this, 106196).getUpdate();
+    }
+    private void stop() {
+        getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
+    }
+    private void commands() {
         getCommand("worlds").setExecutor(new MainCommand());
+    }
+    private void events() {
         new NotifyUpdate(this);
         new DamagePlayer(this);
         new DamagePlayerWithArrow(this);
@@ -40,29 +56,28 @@ public final class Worlds extends JavaPlugin {
         new DamagePlayerWithSpectralArrow(this);
         new DamagePlayerWithThrownPotion(this);
         new DamagePlayerWithTrident(this);
-        message.sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 106196).getUpdate();
+    }
+    @Override
+    public void onEnable() {
+        start();
     }
     @Override
     public void onDisable() {
-        if (worldConfig.getWorldEditors().isEmpty()) {
-            worldConfig.getWorldEditors().clear();
-        }
-        message.sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
+        stop();
     }
     public void reload() {
         File file = new File(getDataFolder(), "config.yml");
         if (file.exists()) {
             try {
                 getConfig().load(file);
-                saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
-                message.sendLog(Level.WARNING, e.getMessage());
+                getMessage().sendLog(Level.WARNING, e.getMessage());
             }
+            saveConfig();
         } else {
             getConfig().options().copyDefaults(true);
             saveConfig();
         }
-        worldConfig.reload();
+        getWorldConfig().reload();
     }
 }

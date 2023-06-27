@@ -14,15 +14,15 @@ public class DamagePlayerWithTrident implements Listener {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    public DamagePlayerWithTrident(Worlds worlds){
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public DamagePlayerWithTrident(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayerWithTrident (EntityDamageByEntityEvent event){
+    public void onDamagePlayerWithTrident (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.TRIDENT))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Trident damager = (Trident) event.getDamager();
-        if (damager.getShooter() instanceof Player){
+        if (damager.getShooter() instanceof Player) {
             Player player = (Player) damager.getShooter();
             if (getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);

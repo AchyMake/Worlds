@@ -29,14 +29,14 @@ public class Create extends MainSubCommand {
         } else if (args.length == 3) {
             if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
                 if (!getWorldConfig().folderExist(args[1])) {
-                    getMessage().send(sender,args[1] + "&6 is about to be created");
+                    getMessage().send(sender, args[1] + "&6 is about to be created");
                     getWorldConfig().create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
-                    getMessage().send(sender,args[1] + "&6 created with environment &f" + World.Environment.valueOf(args[2].toUpperCase()).toString().toLowerCase());
+                    getMessage().send(sender, args[1] + "&6 created with environment &f" + World.Environment.valueOf(args[2].toUpperCase()).toString().toLowerCase());
                 } else {
-                    getMessage().send(sender,args[1] + "&c already exist");
+                    getMessage().send(sender, args[1] + "&c already exist");
                 }
             } else {
-                getMessage().send(sender,"&cYou have to add&f environment&c to create your world");
+                getMessage().send(sender, "&cYou have to add&f environment&c to create your world");
             }
         }
     }

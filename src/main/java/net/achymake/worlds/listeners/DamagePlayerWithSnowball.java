@@ -14,15 +14,15 @@ public class DamagePlayerWithSnowball implements Listener {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    public DamagePlayerWithSnowball(Worlds worlds){
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public DamagePlayerWithSnowball(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayerWithSnowball (EntityDamageByEntityEvent event){
+    public void onDamagePlayerWithSnowball (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.SNOWBALL))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Snowball snowball = (Snowball) event.getDamager();
-        if (snowball.getShooter() instanceof Player){
+        if (snowball.getShooter() instanceof Player) {
             Player player = (Player) snowball.getShooter();
             if (getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);

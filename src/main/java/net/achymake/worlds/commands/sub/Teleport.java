@@ -35,9 +35,9 @@ public class Teleport extends MainSubCommand {
                 Server server = player.getServer();
                 if (getWorldConfig().worldExist(worldName)) {
                     player.teleport(server.getWorld(worldName).getSpawnLocation().add(0.5, 0.0, 0.5));
-                    getMessage().send(player,"&6Teleporting to &f" + worldName);
+                    getMessage().send(player, "&6Teleporting to &f" + worldName);
                 } else {
-                    getMessage().send(player,worldName + "&c does not exist");
+                    getMessage().send(player, worldName + "&c does not exist");
                 }
             }
         }

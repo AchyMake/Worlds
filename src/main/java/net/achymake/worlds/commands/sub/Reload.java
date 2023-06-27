@@ -24,7 +24,7 @@ public class Reload extends MainSubCommand {
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
             getPlugin().reload();
-            getMessage().send(sender,"&6Worlds reloaded");
+            getMessage().send(sender, "&6Worlds reloaded");
         }
     }
 }

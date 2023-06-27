@@ -6,23 +6,19 @@ import org.bukkit.WorldCreator;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
 public class WorldConfig {
-    private File dataFolder;
+    private final File dataFolder;
     public WorldConfig (File dataFolder) {
         this.dataFolder = dataFolder;
     }
     private Message getMessage() {
         return Worlds.getMessage();
     }
-    private static final List<Player> worldEditors = new ArrayList<>();
     public boolean fileExist(String worldName) {
         return new File(dataFolder, "worlds/" + worldName + ".yml").exists();
     }
@@ -39,7 +35,7 @@ public class WorldConfig {
                 for (File files : folder.listFiles()) {
                     String worldName = files.getName().replace(".yml", "");
                     File worldFolder = new File(Worlds.getInstance().getServer().getWorldContainer(), worldName);
-                    if (Worlds.getInstance().getServer().getWorld(worldName) == null) {
+                    if (!worldExist(worldName)) {
                         if (worldFolder.exists()) {
                             getMessage().sendLog(Level.INFO, "creating " + worldName);
                             FileConfiguration configuration = YamlConfiguration.loadConfiguration(files);
@@ -47,7 +43,7 @@ public class WorldConfig {
                             worldCreator.environment(World.Environment.valueOf(configuration.getString("environment")));
                             worldCreator.seed(configuration.getLong("seed"));
                             worldCreator.createWorld();
-                            getMessage().sendLog(Level.INFO, worldName+" has been created with " + configuration.getString("environment") + " environment");
+                            getMessage().sendLog(Level.INFO, worldName + " has been created with " + configuration.getString("environment") + " environment");
                         } else {
                             files.delete();
                             getMessage().sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
@@ -114,13 +110,9 @@ public class WorldConfig {
             FileConfiguration config = YamlConfiguration.loadConfiguration(files);
             try {
                 config.load(files);
-                config.save(files);
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
         }
-    }
-    public List<Player> getWorldEditors() {
-        return worldEditors;
     }
 }

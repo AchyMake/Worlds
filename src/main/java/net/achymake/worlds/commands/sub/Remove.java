@@ -26,19 +26,19 @@ public class Remove extends MainSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            getMessage().send(sender,"&cusage: &f/world remove world");
+            getMessage().send(sender, "&cusage: &f/world remove world");
         }
         if (args.length == 2) {
             String worldName = args[1];
             if (getWorldConfig().worldExist(worldName)) {
-                File file = new File(Worlds.getInstance().getDataFolder(), "worlds/"+worldName+".yml");
+                File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
                 if (file.exists()) {
                     file.delete();
                 }
                 sender.getServer().unloadWorld(worldName, true);
-                getMessage().send(sender,worldName + "&6 is saved and removed");
+                getMessage().send(sender, worldName + "&6 is saved and removed");
             } else {
-                getMessage().send(sender,worldName + "&c does not exist");
+                getMessage().send(sender, worldName + "&c does not exist");
             }
         }
     }

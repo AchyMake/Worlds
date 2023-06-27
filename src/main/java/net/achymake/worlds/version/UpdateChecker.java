@@ -2,6 +2,7 @@ package net.achymake.worlds.version;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.files.Message;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class UpdateChecker {
     private Message getMessage() {
         return Worlds.getMessage();
     }
+    private FileConfiguration getConfig() {
+        return Worlds.getConfiguration();
+    }
     public void getVersion(Consumer<String> consumer) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
@@ -39,8 +43,9 @@ public class UpdateChecker {
         });
     }
     public void getUpdate() {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
+        if (getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
+                getMessage().sendLog(Level.INFO, "checking latest release");
                 if (plugin.getDescription().getVersion().equals(latest)) {
                     getMessage().sendLog(Level.INFO, "You are using the latest version");
                 } else {
@@ -51,7 +56,7 @@ public class UpdateChecker {
         }
     }
     public void sendMessage(Player player) {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
+        if (getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
                 if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     getMessage().send(player,"&6" + plugin.getName() + " Update:&f " + latest);

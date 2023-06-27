@@ -13,11 +13,11 @@ public class DamagePlayer implements Listener {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    public DamagePlayer(Worlds worlds){
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public DamagePlayer(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayer (EntityDamageByEntityEvent event){
+    public void onDamagePlayer (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.PLAYER))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Player player = (Player) event.getDamager();

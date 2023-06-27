@@ -14,15 +14,15 @@ public class DamagePlayerWithThrownPotion implements Listener {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    public DamagePlayerWithThrownPotion(Worlds worlds){
-        worlds.getServer().getPluginManager().registerEvents(this, worlds);
+    public DamagePlayerWithThrownPotion(Worlds plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDamagePlayerWithThrownPotion (EntityDamageByEntityEvent event){
+    public void onDamagePlayerWithThrownPotion (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.SPLASH_POTION))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         ThrownPotion damager = (ThrownPotion) event.getDamager();
-        if (damager.getShooter() instanceof Player){
+        if (damager.getShooter() instanceof Player) {
             Player player = (Player) damager.getShooter();
             if (getWorldConfig().isPVP(player.getWorld().getName()))return;
             event.setCancelled(true);

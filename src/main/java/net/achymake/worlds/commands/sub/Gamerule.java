@@ -26,9 +26,9 @@ public class Gamerule extends MainSubCommand {
         if (args.length == 4) {
             if (getWorldConfig().worldExist(args[1])) {
                 sender.getServer().getWorld(args[1]).setGameRuleValue(args[2], args[3]);
-                getMessage().send(sender,args[1] + "&6 changed &f" + args[2] + "&6 to &f" + args[3]);
+                getMessage().send(sender, args[1] + "&6 changed &f" + args[2] + "&6 to &f" + args[3]);
             } else {
-                getMessage().send(sender,args[1] + "&c does not exist");
+                getMessage().send(sender, args[1] + "&c does not exist");
             }
         }
     }
