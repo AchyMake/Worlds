@@ -68,19 +68,18 @@ public final class Worlds extends JavaPlugin {
     public void reload() {
         File file = new File(getDataFolder(), "config.yml");
         if (file.exists()) {
-            getMessage().sendLog(Level.INFO, "reloading config file");
             try {
                 getConfig().load(file);
+                getMessage().sendLog(Level.INFO, "reloaded config file");
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
             saveConfig();
-            getMessage().sendLog(Level.INFO, "successfully reloaded config file");
         } else {
             getMessage().sendLog(Level.INFO, "creating config file");
             getConfig().options().copyDefaults(true);
             saveConfig();
-            getMessage().sendLog(Level.INFO, "successfully created config file");
+            getMessage().sendLog(Level.INFO, "created config file");
         }
         getWorldConfig().reload();
     }
