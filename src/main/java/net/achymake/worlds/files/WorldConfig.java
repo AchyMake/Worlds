@@ -108,11 +108,13 @@ public class WorldConfig {
         File folder = new File(dataFolder, "worlds");
         for (File files : folder.listFiles()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(files);
+            getMessage().sendLog(Level.INFO, "reloading " + config.getName() + " file");
             try {
                 config.load(files);
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
+            getMessage().sendLog(Level.INFO, "successfully reloaded " + config.getName() + " file");
         }
     }
 }
