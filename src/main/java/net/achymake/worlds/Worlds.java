@@ -70,7 +70,7 @@ public final class Worlds extends JavaPlugin {
         if (file.exists()) {
             try {
                 getConfig().load(file);
-                getMessage().sendLog(Level.INFO, "reloaded config.yml");
+                getMessage().sendLog(Level.INFO, "loaded config.yml");
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
