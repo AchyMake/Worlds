@@ -1,7 +1,6 @@
 package net.achymake.worlds.files;
 
 import net.achymake.worlds.Worlds;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.InvalidConfigurationException;
