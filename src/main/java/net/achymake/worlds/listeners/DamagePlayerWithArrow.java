@@ -3,7 +3,6 @@ package net.achymake.worlds.listeners;
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
