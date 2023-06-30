@@ -26,7 +26,7 @@ public class Remove extends MainSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            getMessage().send(sender, "&cusage: &f/world remove world");
+            getMessage().send(sender, "&cUsage: &f/worlds remove worldName");
         }
         if (args.length == 2) {
             String worldName = args[1];

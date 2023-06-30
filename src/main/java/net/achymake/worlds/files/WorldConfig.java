@@ -1,6 +1,7 @@
 package net.achymake.worlds.files;
 
 import net.achymake.worlds.Worlds;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -19,6 +20,9 @@ public class WorldConfig {
     private Message getMessage() {
         return Worlds.getMessage();
     }
+    private Worlds getPlugin() {
+        return Worlds.getInstance();
+    }
     public boolean fileExist(String worldName) {
         return new File(dataFolder, "worlds/" + worldName + ".yml").exists();
     }
@@ -34,7 +38,7 @@ public class WorldConfig {
             if (folder.list().length > 0) {
                 for (File files : folder.listFiles()) {
                     String worldName = files.getName().replace(".yml", "");
-                    File worldFolder = new File(Worlds.getInstance().getServer().getWorldContainer(), worldName);
+                    File worldFolder = new File(getPlugin().getServer().getWorldContainer(), worldName);
                     if (!worldExist(worldName)) {
                         if (worldFolder.exists()) {
                             getMessage().sendLog(Level.INFO, "creating " + worldName);
@@ -53,7 +57,7 @@ public class WorldConfig {
             }
         } else {
             folder.mkdirs();
-            for (World world : Worlds.getInstance().getServer().getWorlds()) {
+            for (World world : getPlugin().getServer().getWorlds()) {
                 File file = new File(dataFolder, "worlds/" + world.getName() + ".yml");
                 if (!file.exists()) {
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);

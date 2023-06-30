@@ -25,7 +25,7 @@ public class Create extends MainSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 2) {
-            getMessage().send(sender,"&cusage: &f/world create world normal");
+            getMessage().send(sender,"&cUsage: &f/worlds create worldName normal");
         } else if (args.length == 3) {
             if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
                 if (!getWorldConfig().folderExist(args[1])) {

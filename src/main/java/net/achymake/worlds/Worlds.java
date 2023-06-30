@@ -40,7 +40,7 @@ public final class Worlds extends JavaPlugin {
         commands();
         events();
         getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 106196).getUpdate();
+        new UpdateChecker().getUpdate();
     }
     private void stop() {
         getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
@@ -49,13 +49,13 @@ public final class Worlds extends JavaPlugin {
         getCommand("worlds").setExecutor(new MainCommand());
     }
     private void events() {
-        new NotifyUpdate(this);
         new DamagePlayer(this);
         new DamagePlayerWithArrow(this);
         new DamagePlayerWithSnowball(this);
         new DamagePlayerWithSpectralArrow(this);
         new DamagePlayerWithThrownPotion(this);
         new DamagePlayerWithTrident(this);
+        new NotifyUpdate(this);
     }
     @Override
     public void onEnable() {

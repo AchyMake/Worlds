@@ -28,7 +28,7 @@ public class Teleport extends MainSubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
-                getMessage().send(player, "&cusage: &f/world teleport world");
+                getMessage().send(player, "&cUsage: &f/worlds teleport worldName");
             }
             if (args.length == 2) {
                 String worldName = args[1];

@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class DamagePlayerWithSnowball implements Listener {
     private WorldConfig getWorldConfig() {
@@ -21,11 +22,12 @@ public class DamagePlayerWithSnowball implements Listener {
     public void onDamagePlayerWithSnowball (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.SNOWBALL))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
-        Snowball snowball = (Snowball) event.getDamager();
-        if (snowball.getShooter() instanceof Player) {
-            Player player = (Player) snowball.getShooter();
-            if (getWorldConfig().isPVP(player.getWorld().getName()))return;
-            event.setCancelled(true);
-        }
+        Snowball damager = (Snowball) event.getDamager();
+        if (!isPlayer(damager.getShooter()))return;
+        if (getWorldConfig().isPVP(event.getDamager().getWorld().getName()))return;
+        event.setCancelled(true);
+    }
+    private boolean isPlayer(ProjectileSource projectileSource) {
+        return projectileSource instanceof Player;
     }
 }
