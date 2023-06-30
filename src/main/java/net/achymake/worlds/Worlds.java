@@ -76,10 +76,9 @@ public final class Worlds extends JavaPlugin {
             }
             saveConfig();
         } else {
-            getMessage().sendLog(Level.INFO, "creating config file");
             getConfig().options().copyDefaults(true);
             saveConfig();
-            getMessage().sendLog(Level.INFO, "created config file");
+            getMessage().sendLog(Level.INFO, "created config.yml");
         }
         getWorldConfig().reload();
     }
