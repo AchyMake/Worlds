@@ -24,7 +24,7 @@ public class Reload extends MainSubCommand {
             Player player = (Player) sender;
             if (args.length == 1) {
                 getPlugin().reload();
-                Worlds.send(player, "Worlds reloaded");
+                Worlds.send(player, "&6Worlds reloaded");
             }
         }
         if (sender instanceof ConsoleCommandSender) {

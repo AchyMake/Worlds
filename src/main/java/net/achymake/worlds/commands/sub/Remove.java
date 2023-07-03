@@ -26,7 +26,7 @@ public class Remove extends MainSubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
-                Worlds.send(player, "Usage: /worlds remove worldName");
+                Worlds.send(player, "&cUsage:&f /worlds remove worldName");
             }
             if (args.length == 2) {
                 String worldName = args[1];
@@ -36,9 +36,9 @@ public class Remove extends MainSubCommand {
                         file.delete();
                     }
                     sender.getServer().unloadWorld(worldName, true);
-                    Worlds.send(player, worldName + " is saved and removed");
+                    Worlds.send(player, worldName + "&6 is saved and removed");
                 } else {
-                    Worlds.send(player, worldName + " does not exist");
+                    Worlds.send(player, worldName + "&c does not exist");
                 }
             }
         }

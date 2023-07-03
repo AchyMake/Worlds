@@ -40,7 +40,7 @@ public final class Worlds extends JavaPlugin {
         sender.sendMessage(message);
     }
     public static void send(Player player, String message) {
-        player.sendMessage(addColor(message));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
     private void start() {
         instance = this;
@@ -139,8 +139,5 @@ public final class Worlds extends JavaPlugin {
     }
     private boolean notifyUpdate() {
         return getConfig().getBoolean("notify-update.enable");
-    }
-    private static String addColor(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

@@ -25,19 +25,19 @@ public class Create extends MainSubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 2) {
-                Worlds.send(player,"Usage: /worlds create worldName normal");
+                Worlds.send(player,"&cUsage:&f /worlds create worldName normal");
             }
             if (args.length == 3) {
                 if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
                     if (!getWorldConfig().folderExist(args[1])) {
-                        Worlds.send(player, args[1] + " is about to be created");
+                        Worlds.send(player, args[1] + "&6 is about to be created");
                         getWorldConfig().create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
-                        Worlds.send(player, args[1] + " created with environment " + World.Environment.valueOf(args[2].toUpperCase()).toString().toLowerCase());
+                        Worlds.send(player, args[1] + "&6 created with environment&f " + World.Environment.valueOf(args[2].toUpperCase()).toString().toLowerCase());
                     } else {
-                        Worlds.send(player, args[1] + " already exist");
+                        Worlds.send(player, args[1] + "&c already exist");
                     }
                 } else {
-                    Worlds.send(player, "You have to add environment to create your world");
+                    Worlds.send(player, "&cYou have to add environment to create your world");
                 }
             }
         }

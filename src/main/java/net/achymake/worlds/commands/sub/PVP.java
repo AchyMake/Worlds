@@ -28,9 +28,9 @@ public class PVP extends MainSubCommand {
                 if (getWorldConfig().worldExist(worldName)) {
                     getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
                     if (getWorldConfig().isPVP(worldName)){
-                        Worlds.send(player, worldName + " is now pvp mode");
+                        Worlds.send(player, worldName + "&6 is now pvp mode");
                     } else {
-                        Worlds.send(player, worldName + " is no longer pvp mode");
+                        Worlds.send(player, worldName + "&6 is no longer pvp mode");
                     }
                 }
             }
@@ -39,9 +39,9 @@ public class PVP extends MainSubCommand {
                 if (getWorldConfig().worldExist(worldName)) {
                     getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
                     if (getWorldConfig().isPVP(worldName)) {
-                        Worlds.send(player, worldName + " is now pvp mode");
+                        Worlds.send(player, worldName + "&6 is now pvp mode");
                     } else {
-                        Worlds.send(player, worldName + " is no longer pvp mode");
+                        Worlds.send(player, worldName + "&6 is no longer pvp mode");
                     }
                 }
             }
@@ -51,9 +51,9 @@ public class PVP extends MainSubCommand {
                 if (getWorldConfig().worldExist(worldName)) {
                     getWorldConfig().setPVP(worldName, value);
                     if (getWorldConfig().isPVP(worldName)) {
-                        Worlds.send(player, worldName + " is now pvp mode");
+                        Worlds.send(player, worldName + "&6 is now pvp mode");
                     } else {
-                        Worlds.send(player, worldName + " is no longer pvp mode");
+                        Worlds.send(player, worldName + "&6 is no longer pvp mode");
                     }
                 }
             }
