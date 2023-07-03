@@ -3,6 +3,8 @@ package net.achymake.worlds;
 import net.achymake.worlds.commands.MainCommand;
 import net.achymake.worlds.files.WorldConfig;
 import net.achymake.worlds.listeners.*;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -127,5 +129,8 @@ public final class Worlds extends JavaPlugin {
     }
     public static void send(Player player, String message) {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+    }
+    public static void sendActionBar(Player player, String message) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', message)));
     }
 }

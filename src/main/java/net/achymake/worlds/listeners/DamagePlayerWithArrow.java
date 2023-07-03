@@ -28,7 +28,7 @@ public class DamagePlayerWithArrow implements Listener {
         if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
         Player player = (Player) damager.getShooter();
-        Worlds.send(player, "&cError:&7 PVP is disabled in&f " + player.getWorld().getName());
+        Worlds.sendActionBar(player, "&cError:&7 PVP is Disabled");
     }
     private boolean isPlayer(ProjectileSource projectileSource) {
         return projectileSource instanceof Player;

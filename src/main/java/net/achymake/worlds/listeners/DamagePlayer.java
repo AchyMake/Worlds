@@ -24,7 +24,7 @@ public class DamagePlayer implements Listener {
         if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
         Player player = (Player) event.getDamager();
-        Worlds.send(player, "&cError:&7 PVP is disabled in&f " + player.getWorld().getName());
+        Worlds.sendActionBar(player, "&cError:&7 PVP is Disabled");
     }
     private boolean isPVP(World world) {
         return getWorldConfig().isPVP(world.getName());
