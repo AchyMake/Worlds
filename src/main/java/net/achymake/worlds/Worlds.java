@@ -4,7 +4,7 @@ import net.achymake.worlds.commands.MainCommand;
 import net.achymake.worlds.files.WorldConfig;
 import net.achymake.worlds.listeners.*;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ public final class Worlds extends JavaPlugin {
     public static WorldConfig getWorldConfig() {
         return worldConfig;
     }
-    public static void send(CommandSender sender, String message) {
+    public static void send(ConsoleCommandSender sender, String message) {
         sender.sendMessage(message);
     }
     public static void send(Player player, String message) {

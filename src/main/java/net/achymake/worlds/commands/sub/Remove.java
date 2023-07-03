@@ -4,6 +4,8 @@ import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
 import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 
@@ -21,20 +23,42 @@ public class Remove extends MainSubCommand {
         return "/worlds remove name";
     }
     public void perform(CommandSender sender, String[] args) {
-        if (args.length == 1) {
-            Worlds.send(sender, "Usage: /worlds remove worldName");
-        }
-        if (args.length == 2) {
-            String worldName = args[1];
-            if (getWorldConfig().worldExist(worldName)) {
-                File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
-                if (file.exists()) {
-                    file.delete();
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (args.length == 1) {
+                Worlds.send(player, "Usage: /worlds remove worldName");
+            }
+            if (args.length == 2) {
+                String worldName = args[1];
+                if (getWorldConfig().worldExist(worldName)) {
+                    File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                    sender.getServer().unloadWorld(worldName, true);
+                    Worlds.send(player, worldName + " is saved and removed");
+                } else {
+                    Worlds.send(player, worldName + " does not exist");
                 }
-                sender.getServer().unloadWorld(worldName, true);
-                Worlds.send(sender, worldName + " is saved and removed");
-            } else {
-                Worlds.send(sender, worldName + " does not exist");
+            }
+        }
+        if (sender instanceof ConsoleCommandSender) {
+            ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
+            if (args.length == 1) {
+                Worlds.send(commandSender, "Usage: /worlds remove worldName");
+            }
+            if (args.length == 2) {
+                String worldName = args[1];
+                if (getWorldConfig().worldExist(worldName)) {
+                    File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                    sender.getServer().unloadWorld(worldName, true);
+                    Worlds.send(commandSender, worldName + " is saved and removed");
+                } else {
+                    Worlds.send(commandSender, worldName + " does not exist");
+                }
             }
         }
     }
