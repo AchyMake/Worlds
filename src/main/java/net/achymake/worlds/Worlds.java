@@ -6,7 +6,6 @@ import net.achymake.worlds.listeners.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Consumer;
@@ -24,10 +23,6 @@ public final class Worlds extends JavaPlugin {
     public static Worlds getInstance() {
         return instance;
     }
-    private static FileConfiguration configuration;
-    public static FileConfiguration getConfiguration() {
-        return configuration;
-    }
     private static Logger logger;
     public static void sendLog(Level level, String message) {
         logger.log(level, message);
@@ -36,15 +31,9 @@ public final class Worlds extends JavaPlugin {
     public static WorldConfig getWorldConfig() {
         return worldConfig;
     }
-    public static void send(ConsoleCommandSender sender, String message) {
-        sender.sendMessage(message);
-    }
-    public static void send(Player player, String message) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-    }
-    private void start() {
+    @Override
+    public void onEnable() {
         instance = this;
-        configuration = getConfig();
         logger = getLogger();
         worldConfig = new WorldConfig(getDataFolder());
         getWorldConfig().setup();
@@ -54,7 +43,8 @@ public final class Worlds extends JavaPlugin {
         sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
         getUpdate();
     }
-    private void stop() {
+    @Override
+    public void onDisable() {
         sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     private void commands() {
@@ -68,14 +58,6 @@ public final class Worlds extends JavaPlugin {
         new DamagePlayerWithThrownPotion(this);
         new DamagePlayerWithTrident(this);
         new NotifyUpdate(this);
-    }
-    @Override
-    public void onEnable() {
-        start();
-    }
-    @Override
-    public void onDisable() {
-        stop();
     }
     public void reload() {
         File file = new File(getDataFolder(), "config.yml");
@@ -106,38 +88,44 @@ public final class Worlds extends JavaPlugin {
     }
     public void getUpdate() {
         if (notifyUpdate()) {
-            getLatest((latest) -> {
-                sendLog(Level.INFO, "Checking latest release");
-                if (getDescription().getVersion().equals(latest)) {
-                    sendLog(Level.INFO, "You are using the latest version");
-                } else {
-                    sendLog(Level.INFO, "New Update: " + latest);
-                    sendLog(Level.INFO, "Current Version: " + getDescription().getVersion());
+            getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+                @Override
+                public void run() {
+                    getLatest((latest) -> {
+                        sendLog(Level.INFO, "Checking latest release");
+                        if (getDescription().getVersion().equals(latest)) {
+                            sendLog(Level.INFO, "You are using the latest version");
+                        } else {
+                            sendLog(Level.INFO, "New Update: " + latest);
+                            sendLog(Level.INFO, "Current Version: " + getDescription().getVersion());
+                        }
+                    });
                 }
             });
         }
     }
     public void getLatest(Consumer<String> consumer) {
-        getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 106196)).openStream();
-                    Scanner scanner = new Scanner(inputStream);
-                    if (scanner.hasNext()) {
-                        consumer.accept(scanner.next());
-                        scanner.close();
-                    }
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                } catch (IOException e) {
-                    sendLog(Level.WARNING, e.getMessage());
-                }
+        try {
+            InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 106196)).openStream();
+            Scanner scanner = new Scanner(inputStream);
+            if (scanner.hasNext()) {
+                consumer.accept(scanner.next());
+                scanner.close();
             }
-        });
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        } catch (IOException e) {
+            sendLog(Level.WARNING, e.getMessage());
+        }
     }
     private boolean notifyUpdate() {
         return getConfig().getBoolean("notify-update.enable");
+    }
+    public static void send(ConsoleCommandSender sender, String message) {
+        sender.sendMessage(message);
+    }
+    public static void send(Player player, String message) {
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 }

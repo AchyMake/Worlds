@@ -22,11 +22,13 @@ public class DamagePlayerWithSnowball implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayerWithSnowball (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.SNOWBALL))return;
-        if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Snowball damager = (Snowball) event.getDamager();
         if (!isPlayer(damager.getShooter()))return;
+        if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
+        Player player = (Player) damager.getShooter();
+        Worlds.send(player, "&cError:&7 PVP is disabled in&f " + player.getWorld().getName());
     }
     private boolean isPlayer(ProjectileSource projectileSource) {
         return projectileSource instanceof Player;

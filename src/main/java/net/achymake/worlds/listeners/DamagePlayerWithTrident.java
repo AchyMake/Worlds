@@ -22,11 +22,13 @@ public class DamagePlayerWithTrident implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayerWithTrident (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.TRIDENT))return;
-        if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Trident damager = (Trident) event.getDamager();
         if (!isPlayer(damager.getShooter()))return;
+        if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
+        Player player = (Player) damager.getShooter();
+        Worlds.send(player, "&cError:&7 PVP is disabled in&f " + player.getWorld().getName());
     }
     private boolean isPlayer(ProjectileSource projectileSource) {
         return projectileSource instanceof Player;

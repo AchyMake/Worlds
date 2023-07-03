@@ -4,6 +4,7 @@ import net.achymake.worlds.Worlds;
 import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,6 +23,8 @@ public class DamagePlayer implements Listener {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
+        Player player = (Player) event.getDamager();
+        Worlds.send(player, "&cError:&7 PVP is disabled in&f " + player.getWorld().getName());
     }
     private boolean isPVP(World world) {
         return getWorldConfig().isPVP(world.getName());
