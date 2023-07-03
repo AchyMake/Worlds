@@ -2,6 +2,7 @@ package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.files.WorldConfig;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,7 +20,10 @@ public class DamagePlayer implements Listener {
     public void onDamagePlayer (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.PLAYER))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
-        if (getWorldConfig().isPVP(event.getDamager().getWorld().getName()))return;
+        if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
+    }
+    private boolean isPVP(World world) {
+        return getWorldConfig().isPVP(world.getName());
     }
 }

@@ -16,9 +16,6 @@ public class WorldConfig {
     public WorldConfig (File dataFolder) {
         this.dataFolder = dataFolder;
     }
-    private Message getMessage() {
-        return Worlds.getMessage();
-    }
     private Worlds getPlugin() {
         return Worlds.getInstance();
     }
@@ -26,10 +23,10 @@ public class WorldConfig {
         return new File(dataFolder, "worlds/" + worldName + ".yml").exists();
     }
     public boolean folderExist(String worldName) {
-        return new File(Worlds.getInstance().getServer().getWorldContainer(), worldName).exists();
+        return new File(getPlugin().getServer().getWorldContainer(), worldName).exists();
     }
     public boolean worldExist(String worldName) {
-        return Worlds.getInstance().getServer().getWorld(worldName) != null;
+        return getPlugin().getServer().getWorld(worldName) != null;
     }
     public void setup() {
         File folder = new File(dataFolder, "worlds");
@@ -37,19 +34,20 @@ public class WorldConfig {
             if (folder.list().length > 0) {
                 for (File files : folder.listFiles()) {
                     String worldName = files.getName().replace(".yml", "");
-                    File worldFolder = new File(getPlugin().getServer().getWorldContainer(), worldName);
-                    if (!worldExist(worldName)) {
-                        if (worldFolder.exists()) {
-                            getMessage().sendLog(Level.INFO, "creating " + worldName);
+                    if (worldExist(worldName)) {
+                        Worlds.sendLog(Level.INFO, worldName + " already exist");
+                    } else {
+                        if (folderExist(worldName)) {
+                            Worlds.sendLog(Level.INFO, "creating " + worldName);
                             FileConfiguration configuration = YamlConfiguration.loadConfiguration(files);
                             WorldCreator worldCreator = new WorldCreator(worldName);
                             worldCreator.environment(World.Environment.valueOf(configuration.getString("environment")));
                             worldCreator.seed(configuration.getLong("seed"));
                             worldCreator.createWorld();
-                            getMessage().sendLog(Level.INFO, worldName + " has been created with " + configuration.getString("environment") + " environment");
+                            Worlds.sendLog(Level.INFO, worldName + " has been created with " + configuration.getString("environment") + " environment");
                         } else {
                             files.delete();
-                            getMessage().sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
+                            Worlds.sendLog(Level.WARNING, worldName + " does not exist " + files.getName() + " has been deleted");
                         }
                     }
                 }
@@ -68,7 +66,7 @@ public class WorldConfig {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        getMessage().sendLog(Level.WARNING, e.getMessage());
+                        Worlds.sendLog(Level.WARNING, e.getMessage());
                     }
                 }
             }
@@ -89,7 +87,7 @@ public class WorldConfig {
         try {
             config.save(file);
         } catch (IOException e) {
-            getMessage().sendLog(Level.WARNING, e.getMessage());
+            Worlds.sendLog(Level.WARNING, e.getMessage());
         }
         worldCreator.environment(environment);
         worldCreator.createWorld();
@@ -104,18 +102,20 @@ public class WorldConfig {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            getMessage().sendLog(Level.WARNING, e.getMessage());
+            Worlds.sendLog(Level.WARNING, e.getMessage());
         }
     }
     public void reload() {
         File folder = new File(dataFolder, "worlds");
-        for (File files : folder.listFiles()) {
-            FileConfiguration config = YamlConfiguration.loadConfiguration(files);
-            try {
-                config.load(files);
-                getMessage().sendLog(Level.INFO, "loaded " + files.getName());
-            } catch (IOException | InvalidConfigurationException e) {
-                getMessage().sendLog(Level.WARNING, e.getMessage());
+        if (folder.exists()) {
+            for (File files : folder.listFiles()) {
+                FileConfiguration config = YamlConfiguration.loadConfiguration(files);
+                try {
+                    config.load(files);
+                    Worlds.sendLog(Level.INFO, "loaded " + files.getName());
+                } catch (IOException | InvalidConfigurationException e) {
+                    Worlds.sendLog(Level.WARNING, e.getMessage());
+                }
             }
         }
     }

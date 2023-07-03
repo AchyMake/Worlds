@@ -2,7 +2,6 @@ package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
-import net.achymake.worlds.files.Message;
 import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,9 +10,6 @@ public class PVP extends MainSubCommand {
     private WorldConfig getWorldConfig() {
         return Worlds.getWorldConfig();
     }
-    private Message getMessage() {
-        return Worlds.getMessage();
-    }
     public String getName() {
         return "pvp";
     }
@@ -21,7 +17,7 @@ public class PVP extends MainSubCommand {
         return "reload config";
     }
     public String getSyntax() {
-        return "/world pvp world true";
+        return "/worlds pvp world true";
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
@@ -31,9 +27,9 @@ public class PVP extends MainSubCommand {
                 if (getWorldConfig().worldExist(worldName)) {
                     getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
                     if (getWorldConfig().isPVP(worldName)){
-                        getMessage().send(sender, worldName + "&6 is now pvp mode");
+                        Worlds.send(sender, worldName + " is now pvp mode");
                     } else {
-                        getMessage().send(sender, worldName + "&6 is no longer pvp mode");
+                        Worlds.send(sender, worldName + " is no longer pvp mode");
                     }
                 }
             }
@@ -43,9 +39,9 @@ public class PVP extends MainSubCommand {
             if (getWorldConfig().worldExist(worldName)) {
                 getWorldConfig().setPVP(worldName, !getWorldConfig().isPVP(worldName));
                 if (getWorldConfig().isPVP(worldName)) {
-                    getMessage().send(sender, worldName + "&6 is now pvp mode");
+                    Worlds.send(sender, worldName + " is now pvp mode");
                 } else {
-                    getMessage().send(sender, worldName + "&6 is no longer pvp mode");
+                    Worlds.send(sender, worldName + " is no longer pvp mode");
                 }
             }
         }
@@ -55,9 +51,9 @@ public class PVP extends MainSubCommand {
             if (getWorldConfig().worldExist(worldName)) {
                 getWorldConfig().setPVP(worldName, value);
                 if (getWorldConfig().isPVP(worldName)) {
-                    getMessage().send(sender, worldName + "&6 is now pvp mode");
+                    Worlds.send(sender, worldName + " is now pvp mode");
                 } else {
-                    getMessage().send(sender, worldName + "&6 is no longer pvp mode");
+                    Worlds.send(sender, worldName + " is no longer pvp mode");
                 }
             }
         }

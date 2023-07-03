@@ -2,15 +2,11 @@ package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
-import net.achymake.worlds.files.Message;
 import org.bukkit.command.CommandSender;
 
 public class Reload extends MainSubCommand {
     private Worlds getPlugin() {
         return Worlds.getInstance();
-    }
-    private Message getMessage() {
-        return Worlds.getMessage();
     }
     public String getName() {
         return "reload";
@@ -19,12 +15,12 @@ public class Reload extends MainSubCommand {
         return "reload config";
     }
     public String getSyntax() {
-        return "/world reload";
+        return "/worlds reload";
     }
     public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
             getPlugin().reload();
-            getMessage().send(sender, "&6Worlds reloaded");
+            Worlds.send(sender, "Worlds reloaded");
         }
     }
 }

@@ -2,14 +2,10 @@ package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
-import net.achymake.worlds.files.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Setspawn extends MainSubCommand {
-    private Message getMessage() {
-        return Worlds.getMessage();
-    }
     public String getName() {
         return "setspawn";
     }
@@ -24,7 +20,7 @@ public class Setspawn extends MainSubCommand {
             Player player = (Player) sender;
             if (args.length == 1) {
                 player.getWorld().setSpawnLocation(player.getLocation());
-                getMessage().send(player, player.getWorld().getName() + "&6 changed spawn point");
+                Worlds.send(player, player.getWorld().getName() + " changed spawn point");
             }
         }
     }

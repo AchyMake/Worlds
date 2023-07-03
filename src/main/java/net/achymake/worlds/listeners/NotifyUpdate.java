@@ -16,6 +16,6 @@ public class NotifyUpdate implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onNotifyUpdate(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPermission("worlds.command"))return;
-        getPlugin().sendUpdate(event.getPlayer());
+        getPlugin().getUpdate(event.getPlayer());
     }
 }

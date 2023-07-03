@@ -2,6 +2,7 @@ package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.files.WorldConfig;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
@@ -24,10 +25,13 @@ public class DamagePlayerWithThrownPotion implements Listener {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         ThrownPotion damager = (ThrownPotion) event.getDamager();
         if (!isPlayer(damager.getShooter()))return;
-        if (getWorldConfig().isPVP(event.getDamager().getWorld().getName()))return;
+        if (isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
     }
     private boolean isPlayer(ProjectileSource projectileSource) {
         return projectileSource instanceof Player;
+    }
+    private boolean isPVP(World world) {
+        return getWorldConfig().isPVP(world.getName());
     }
 }
