@@ -1,17 +1,19 @@
 package net.achymake.worlds.commands;
 
+import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.sub.*;
 import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class MainCommand implements CommandExecutor, TabCompleter {
+    private Worlds getPlugin() {
+        return Worlds.getInstance();
+    }
     private final ArrayList<MainSubCommand> mainSubCommands = new ArrayList<>();
     public MainCommand() {
         this.mainSubCommands.add(new Add());
@@ -24,9 +26,16 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         this.mainSubCommands.add(new Teleport());
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length > 0){
-            for (MainSubCommand commands : mainSubCommands){
-                if (args[0].equalsIgnoreCase(commands.getName())){
+        if (args.length == 0) {
+            if (sender instanceof Player) {
+                Worlds.send((Player) sender, "&6" + getPlugin().getName() + ":&f " + getPlugin().getDescription().getVersion());
+            }
+            if (sender instanceof ConsoleCommandSender) {
+                Worlds.send((ConsoleCommandSender) sender, getPlugin().getName() + ": " + getPlugin().getDescription().getVersion());
+            }
+        } else {
+            for (MainSubCommand commands : mainSubCommands) {
+                if (args[0].equalsIgnoreCase(commands.getName())) {
                     commands.perform(sender,args);
                 }
             }
