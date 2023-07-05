@@ -168,6 +168,8 @@ public final class Worlds extends JavaPlugin {
     public static void setupWorlds() {
         File folder = new File(getFolder(), "worlds");
         if (folder.exists()) {
+            sendLog(Level.INFO, "worlds folder detected");
+            sendLog(Level.INFO, "tempting to create worlds");
             if (folder.list().length > 0) {
                 for (File files : folder.listFiles()) {
                     String worldName = files.getName().replace(".yml", "");
@@ -190,6 +192,8 @@ public final class Worlds extends JavaPlugin {
                 }
             }
         } else {
+            sendLog(Level.INFO, "worlds folder undetected");
+            sendLog(Level.INFO, "tempting to create files");
             folder.mkdirs();
             for (World world : getInstance().getServer().getWorlds()) {
                 File file = new File(getFolder(), "worlds/" + world.getName() + ".yml");
@@ -202,6 +206,7 @@ public final class Worlds extends JavaPlugin {
                     config.options().copyDefaults(true);
                     try {
                         config.save(file);
+                        sendLog(Level.INFO, "created " + world.getName() + ".yml");
                     } catch (IOException e) {
                         sendLog(Level.WARNING, e.getMessage());
                     }
@@ -222,6 +227,7 @@ public final class Worlds extends JavaPlugin {
             config.save(file);
             worldCreator.environment(environment);
             worldCreator.createWorld();
+            sendLog(Level.INFO, "created " + worldName + ".yml");
         } catch (IOException e) {
             sendLog(Level.WARNING, e.getMessage());
         }
@@ -238,6 +244,7 @@ public final class Worlds extends JavaPlugin {
         configuration.set("pvp", value);
         try {
             configuration.save(file);
+            sendLog(Level.INFO, "PVP for " + world.getName() + " has changed to " + value);
         } catch (IOException e) {
             sendLog(Level.WARNING, e.getMessage());
         }
