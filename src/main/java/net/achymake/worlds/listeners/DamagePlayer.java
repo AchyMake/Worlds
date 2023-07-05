@@ -1,8 +1,6 @@
 package net.achymake.worlds.listeners;
 
 import net.achymake.worlds.Worlds;
-import net.achymake.worlds.files.WorldConfig;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamagePlayer implements Listener {
-    private WorldConfig getWorldConfig() {
-        return Worlds.getWorldConfig();
-    }
     public DamagePlayer(Worlds plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -21,12 +16,8 @@ public class DamagePlayer implements Listener {
     public void onDamagePlayer (EntityDamageByEntityEvent event) {
         if (!event.getDamager().getType().equals(EntityType.PLAYER))return;
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
-        if (isPVP(event.getDamager().getWorld()))return;
+        if (Worlds.isPVP(event.getDamager().getWorld()))return;
         event.setCancelled(true);
-        Player player = (Player) event.getDamager();
-        Worlds.sendActionBar(player, "&cError:&7 PVP is Disabled");
-    }
-    private boolean isPVP(World world) {
-        return getWorldConfig().isPVP(world.getName());
+        Worlds.sendActionBar((Player) event.getDamager(), "&cError:&7 PVP is Disabled");
     }
 }

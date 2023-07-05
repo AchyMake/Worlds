@@ -2,7 +2,6 @@ package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
-import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -10,9 +9,6 @@ import org.bukkit.entity.Player;
 import java.io.File;
 
 public class Remove extends MainSubCommand {
-    private WorldConfig getWorldConfig() {
-        return Worlds.getWorldConfig();
-    }
     public String getName() {
         return "remove";
     }
@@ -30,7 +26,7 @@ public class Remove extends MainSubCommand {
             }
             if (args.length == 2) {
                 String worldName = args[1];
-                if (getWorldConfig().worldExist(worldName)) {
+                if (Worlds.worldExist(worldName)) {
                     File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
                     if (file.exists()) {
                         file.delete();
@@ -49,7 +45,7 @@ public class Remove extends MainSubCommand {
             }
             if (args.length == 2) {
                 String worldName = args[1];
-                if (getWorldConfig().worldExist(worldName)) {
+                if (Worlds.worldExist(worldName)) {
                     File file = new File(Worlds.getInstance().getDataFolder(), "worlds/" + worldName + ".yml");
                     if (file.exists()) {
                         file.delete();

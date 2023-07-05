@@ -2,16 +2,12 @@ package net.achymake.worlds.commands.sub;
 
 import net.achymake.worlds.Worlds;
 import net.achymake.worlds.commands.MainSubCommand;
-import net.achymake.worlds.files.WorldConfig;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class Add extends MainSubCommand {
-    private WorldConfig getWorldConfig() {
-        return Worlds.getWorldConfig();
-    }
     public String getName() {
         return "add";
     }
@@ -29,10 +25,10 @@ public class Add extends MainSubCommand {
             }
             if (args.length == 3) {
                 if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
-                    if (getWorldConfig().folderExist(args[1])) {
-                        if (!getWorldConfig().worldExist(args[1])) {
+                    if (Worlds.folderExist(args[1])) {
+                        if (!Worlds.worldExist(args[1])) {
                             Worlds.send(player, args[1] + "&6 is about to be added");
-                            getWorldConfig().create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
+                            Worlds.create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
                             Worlds.send(player, args[1] + "&6 is added with environment&f " + World.Environment.valueOf(args[2].toUpperCase()).name().toLowerCase());
                         } else {
                             Worlds.send(player, args[1] + "&c already exist");
@@ -50,10 +46,10 @@ public class Add extends MainSubCommand {
             }
             if (args.length == 3) {
                 if (World.Environment.valueOf(args[2].toUpperCase()).equals(World.Environment.valueOf(args[2].toUpperCase()))) {
-                    if (getWorldConfig().folderExist(args[1])) {
-                        if (!getWorldConfig().worldExist(args[1])) {
+                    if (Worlds.folderExist(args[1])) {
+                        if (!Worlds.worldExist(args[1])) {
                             Worlds.send(commandSender, args[1] + " is about to be added");
-                            getWorldConfig().create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
+                            Worlds.create(args[1], World.Environment.valueOf(args[2].toUpperCase()));
                             Worlds.send(commandSender, args[1] + " is added with environment " + World.Environment.valueOf(args[2].toUpperCase()).name().toLowerCase());
                         } else {
                             Worlds.send(commandSender, args[1] + " already exist");

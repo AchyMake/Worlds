@@ -7,15 +7,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class NotifyUpdate implements Listener {
-    private Worlds getPlugin() {
-        return Worlds.getInstance();
-    }
     public NotifyUpdate(Worlds plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onNotifyUpdate(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPermission("worlds.command"))return;
-        getPlugin().getUpdate(event.getPlayer());
+        Worlds.getUpdate(event.getPlayer());
     }
 }
