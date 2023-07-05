@@ -128,9 +128,12 @@ public final class Worlds extends JavaPlugin {
         sender.sendMessage(message);
     }
     public static void send(Player player, String message) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        player.sendMessage(addColor(message));
     }
     public static void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', message)));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(addColor(message)));
+    }
+    public static String addColor(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

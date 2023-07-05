@@ -24,14 +24,14 @@ public class Reload extends MainSubCommand {
             Player player = (Player) sender;
             if (args.length == 1) {
                 getPlugin().reload();
-                Worlds.send(player, "&6Worlds reloaded");
+                Worlds.send(player, "&6Worlds:&f files reloaded");
             }
         }
         if (sender instanceof ConsoleCommandSender) {
             ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
             if (args.length == 1) {
                 getPlugin().reload();
-                Worlds.send(commandSender, "Worlds reloaded");
+                Worlds.send(commandSender, "Worlds: files reloaded");
             }
         }
     }
