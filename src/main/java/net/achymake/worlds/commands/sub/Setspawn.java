@@ -17,8 +17,8 @@ public class Setspawn extends MainSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
             if (args.length == 1) {
+                Player player = (Player) sender;
                 player.getWorld().setSpawnLocation(player.getLocation());
                 Worlds.send(player, player.getWorld().getName() + "&6 changed spawn point");
             }

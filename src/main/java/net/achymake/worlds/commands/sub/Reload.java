@@ -7,9 +7,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class Reload extends MainSubCommand {
-    private Worlds getPlugin() {
-        return Worlds.getInstance();
-    }
     public String getName() {
         return "reload";
     }
@@ -21,17 +18,15 @@ public class Reload extends MainSubCommand {
     }
     public void perform(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
             if (args.length == 1) {
-                getPlugin().reload();
-                Worlds.send(player, "&6Worlds:&f files reloaded");
+                Worlds.reload();
+                Worlds.send((Player) sender, "&6Worlds:&f files reloaded");
             }
         }
         if (sender instanceof ConsoleCommandSender) {
-            ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
             if (args.length == 1) {
-                getPlugin().reload();
-                Worlds.send(commandSender, "Worlds: files reloaded");
+                Worlds.reload();
+                Worlds.send((ConsoleCommandSender) sender, "Worlds: files reloaded");
             }
         }
     }

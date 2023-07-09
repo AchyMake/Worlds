@@ -16,14 +16,14 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     }
     private final ArrayList<MainSubCommand> mainSubCommands = new ArrayList<>();
     public MainCommand() {
-        this.mainSubCommands.add(new Add());
-        this.mainSubCommands.add(new Create());
-        this.mainSubCommands.add(new Gamerule());
-        this.mainSubCommands.add(new PVP());
-        this.mainSubCommands.add(new Reload());
-        this.mainSubCommands.add(new Remove());
-        this.mainSubCommands.add(new Setspawn());
-        this.mainSubCommands.add(new Teleport());
+        mainSubCommands.add(new Add());
+        mainSubCommands.add(new Create());
+        mainSubCommands.add(new Gamerule());
+        mainSubCommands.add(new PVP());
+        mainSubCommands.add(new Reload());
+        mainSubCommands.add(new Remove());
+        mainSubCommands.add(new Setspawn());
+        mainSubCommands.add(new Teleport());
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
@@ -36,7 +36,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         } else {
             for (MainSubCommand commands : mainSubCommands) {
                 if (args[0].equalsIgnoreCase(commands.getName())) {
-                    commands.perform(sender,args);
+                    commands.perform(sender, args);
                 }
             }
         }

@@ -5,6 +5,7 @@ import net.achymake.worlds.listeners.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.ConsoleCommandSender;
@@ -40,12 +41,17 @@ public final class Worlds extends JavaPlugin {
     public static File getFolder() {
         return folder;
     }
+    private static Server host;
+    public static Server getHost() {
+        return host;
+    }
     @Override
     public void onEnable() {
         instance = this;
         logger = getLogger();
         configuration = getConfig();
         folder = getDataFolder();
+        host = getServer();
         setupWorlds();
         reload();
         commands();
@@ -113,7 +119,7 @@ public final class Worlds extends JavaPlugin {
     }
     public void getUpdate() {
         if (notifyUpdate()) {
-            getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+            getHost().getScheduler().runTaskAsynchronously(this, new Runnable() {
                 @Override
                 public void run() {
                     getLatest((latest) -> {
@@ -160,10 +166,10 @@ public final class Worlds extends JavaPlugin {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
     public static boolean folderExist(String worldName) {
-        return new File(getInstance().getServer().getWorldContainer(), worldName).exists();
+        return new File(getHost().getWorldContainer(), worldName).exists();
     }
     public static boolean worldExist(String worldName) {
-        return getInstance().getServer().getWorld(worldName) != null;
+        return getHost().getWorld(worldName) != null;
     }
     public static void setupWorlds() {
         File folder = new File(getFolder(), "worlds");
@@ -195,7 +201,7 @@ public final class Worlds extends JavaPlugin {
             sendLog(Level.INFO, "worlds folder undetected");
             sendLog(Level.INFO, "tempting to create files");
             folder.mkdirs();
-            for (World world : getInstance().getServer().getWorlds()) {
+            for (World world : getHost().getWorlds()) {
                 File file = new File(getFolder(), "worlds/" + world.getName() + ".yml");
                 if (!file.exists()) {
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -232,11 +238,11 @@ public final class Worlds extends JavaPlugin {
             sendLog(Level.WARNING, e.getMessage());
         }
     }
-    public static FileConfiguration get(World world) {
+    public static FileConfiguration getConfiguration(World world) {
         return YamlConfiguration.loadConfiguration(new File(getFolder(), "worlds/" + world.getName() + ".yml"));
     }
     public static boolean isPVP(World world) {
-        return get(world).getBoolean("pvp");
+        return getConfiguration(world).getBoolean("pvp");
     }
     public static void setPVP(World world, boolean value) {
         File file = new File(getFolder(), "worlds/" + world.getName() + ".yml");
