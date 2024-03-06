@@ -1,0 +1,43 @@
+name: Worlds
+version: '${project.version}'
+main: org.achymake.worlds.Worlds
+api-version: '1.20'
+prefix: '${project.name}'
+author: AchyMake
+description: '${project.description}'
+commands:
+  world:
+    description: allows to use worlds command
+    permission: worlds.command.world
+    permission-message: You do not have the permission to execute the command
+permissions:
+  worlds.command.world:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.add:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.create:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.gamerule:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.pvp:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.reload:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.remove:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.setspawn:
+    description: allows to use worlds command
+    default: op
+  worlds.command.world.teleport:
+    description: allows to use worlds command
+    default: op
+  worlds.event.join.getupdate:
+    description: notify update on join event
+    default: op

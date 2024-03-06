@@ -1,0 +1,4 @@
+name: world_nether
+environment: NETHER
+seed: ""
+pvp: true
