@@ -1,0 +1,27 @@
+name: Worlds
+version: '${project.version}'
+main: org.achymake.worlds.Worlds
+api-version: '1.21'
+prefix: '${project.name}'
+author: AchyMake
+description: '${project.description}'
+website: '${project.url}'
+commands:
+  world:
+    description: world command
+    permission: worlds.command.world
+    permission-message: You do not have the permissions to execute the command
+  worlds:
+    description: worlds command
+    permission: worlds.command.worlds
+    permission-message: You do not have the permissions to execute the command
+permissions:
+  worlds.command.world:
+    description: world command
+    default: op
+  worlds.command.worlds:
+    description: worlds command
+    default: op
+  worlds.event.join.update:
+    description: gets updates on join
+    default: op
