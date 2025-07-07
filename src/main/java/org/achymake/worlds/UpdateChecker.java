@@ -24,7 +24,7 @@ public class UpdateChecker {
         return getInstance().getMessage();
     }
     public String getResourceID() {
-        return String.valueOf(0);
+        return String.valueOf(106196);
     }
     public void getUpdate(Player player) {
         if (!player.hasPermission("worlds.event.join.update"))return;
