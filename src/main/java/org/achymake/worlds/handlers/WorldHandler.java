@@ -76,7 +76,6 @@ public class WorldHandler {
         var worldName = world.getName();
         var file = getFile(worldName);
         var config = YamlConfiguration.loadConfiguration(file);
-        config.set("display-name", worldName);
         config.set("environment", world.getEnvironment().toString());
         config.set("seed", world.getSeed());
         try {
@@ -122,27 +121,5 @@ public class WorldHandler {
             }
             getInstance().getServer().unloadWorld(world, true);
         }
-    }
-    public String getDisplayName(String worldName) {
-        var world = get(worldName);
-        if (world != null) {
-            if (exists(worldName)) {
-                if (getConfig(worldName).isString("display-name")) {
-                    return getConfig(worldName).getString("display-name");
-                } else return worldName;
-            } else return worldName;
-        } else return worldName;
-    }
-    public World.Environment getEnvironment(String worldName) {
-        var world = get(worldName);
-        if (world != null) {
-            return world.getEnvironment();
-        } else return null;
-    }
-    public long getSeed(String worldName) {
-        var world = get(worldName);
-        if (world != null) {
-            return get(worldName).getSeed();
-        } else return 0;
     }
 }

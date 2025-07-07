@@ -15,11 +15,11 @@ public class WorldLoad implements Listener {
     private WorldHandler getWorldHandler() {
         return getInstance().getWorldHandler();
     }
-    private PluginManager getManager() {
+    private PluginManager getPluginManager() {
         return getInstance().getPluginManager();
     }
     public WorldLoad() {
-        getManager().registerEvents(this, getInstance());
+        getPluginManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onWorldLoad(WorldLoadEvent event) {

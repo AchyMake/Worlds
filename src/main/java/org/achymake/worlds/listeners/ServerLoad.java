@@ -15,11 +15,11 @@ public class ServerLoad implements Listener {
     private WorldHandler getWorldHandler() {
         return getInstance().getWorldHandler();
     }
-    private PluginManager getManager() {
+    private PluginManager getPluginManager() {
         return getInstance().getPluginManager();
     }
     public ServerLoad() {
-        getManager().registerEvents(this, getInstance());
+        getPluginManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onServerLoad(ServerLoadEvent event) {

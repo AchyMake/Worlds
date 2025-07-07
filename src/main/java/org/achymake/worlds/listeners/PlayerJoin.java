@@ -15,11 +15,11 @@ public class PlayerJoin implements Listener {
     private UpdateChecker getUpdates() {
         return getInstance().getUpdateChecker();
     }
-    private PluginManager getManager() {
+    private PluginManager getPluginManager() {
         return getInstance().getPluginManager();
     }
     public PlayerJoin() {
-        getManager().registerEvents(this, getInstance());
+        getPluginManager().registerEvents(this, getInstance());
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
