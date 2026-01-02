@@ -40,13 +40,6 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                     world.setSpawnLocation(player.getLocation());
                     player.sendMessage(getMessage().get("commands.world.setspawn", world.getName()));
                     return true;
-                } else if (args[0].equalsIgnoreCase("pvp")) {
-                    var world = player.getWorld();
-                    world.setPVP(!world.getPVP());
-                    if (world.getPVP()) {
-                        player.sendMessage(getMessage().get("commands.world.pvp.enable", world.getName()));
-                    } else player.sendMessage(getMessage().get("commands.world.pvp.disable", world.getName()));
-                    return true;
                 }
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("add")) {
@@ -72,15 +65,6 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         for (var gameRules : world.getGameRules()) {
                             player.sendMessage(getMessage().get("commands.world.info.gamerule.listed", gameRules, world.getGameRuleValue(gameRules)));
                         }
-                    } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
-                    return true;
-                } else if (args[0].equalsIgnoreCase("pvp")) {
-                    var world = getWorldHandler().get(args[1]);
-                    if (world != null) {
-                        world.setPVP(!world.getPVP());
-                        if (world.getPVP()) {
-                            player.sendMessage(getMessage().get("commands.world.pvp.enable", args[1]));
-                        } else player.sendMessage(getMessage().get("commands.world.pvp.disable", args[1]));
                     } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
                     return true;
                 } else if (args[0].equalsIgnoreCase("remove")) {
@@ -114,15 +98,6 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         if (getWorldHandler().setDifficulty(args[1], args[2])) {
                             player.sendMessage(getMessage().get("commands.world.difficulty.success", world.getName(), getMessage().toTitleCase(args[2])));
                         } else player.sendMessage(getMessage().get("commands.world.difficulty.invalid", args[2]));
-                    } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
-                    return true;
-                } else if (args[0].equalsIgnoreCase("pvp")) {
-                    var world = getWorldHandler().get(args[1]);
-                    if (world != null) {
-                        world.setPVP(Boolean.parseBoolean(args[2]));
-                        if (world.getPVP()) {
-                            player.sendMessage(getMessage().get("commands.world.pvp.enable", world.getName()));
-                        } else player.sendMessage(getMessage().get("commands.world.pvp.disable", world.getName()));
                     } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
                     return true;
                 }
@@ -166,13 +141,11 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 commands.add("difficulty");
                 commands.add("info");
                 commands.add("gamerule");
-                commands.add("pvp");
                 commands.add("remove");
                 commands.add("setspawn");
                 commands.add("teleport");
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("gamerule") ||
-                        args[0].equalsIgnoreCase("pvp") ||
                         args[0].equalsIgnoreCase("remove") ||
                         args[0].equalsIgnoreCase("teleport") ||
                         args[0].equalsIgnoreCase("difficulty") ||
@@ -191,8 +164,6 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         commands.add("normal");
                         commands.add("hard");
                     }
-                } else if (args[0].equalsIgnoreCase("pvp")) {
-                    commands.add(String.valueOf(getWorldHandler().get(args[1]).getPVP()));
                 } else if (args[0].equalsIgnoreCase("gamerule")) {
                     Collections.addAll(commands, getWorldHandler().get(args[1]).getGameRules());
                 }

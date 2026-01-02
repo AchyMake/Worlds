@@ -2,10 +2,7 @@ package org.achymake.worlds.commands;
 
 import org.achymake.worlds.Worlds;
 import org.achymake.worlds.data.Message;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -27,7 +24,15 @@ public class WorldsCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     getInstance().reload();
-                    player.sendMessage(getMessage().addColor("&6Worlds&f: reloaded"));
+                    player.sendMessage(getMessage().addColor("&6" + getInstance().name() + "&f: reloaded"));
+                    return true;
+                }
+            }
+        } else if (sender instanceof ConsoleCommandSender consoleCommandSender) {
+            if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("reload")) {
+                    getInstance().reload();
+                    consoleCommandSender.sendMessage(getInstance().name() + ": reloaded");
                     return true;
                 }
             }
