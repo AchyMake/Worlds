@@ -58,6 +58,10 @@ public class Message {
         config.set("commands.world.pvp.disable", "{0}&6 is no longer PVP mode");
         config.set("commands.world.remove", "{0}&6 is Saved and Removed");
         config.set("commands.world.setspawn",  "{0}&6 changed Spawn Point");
+        config.set("commands.world.time.add",  "{0}&6 added&f {1}&6 time");
+        config.set("commands.world.time.remove",  "{0}&6 removed&f {1}&6 time");
+        config.set("commands.world.time.set",  "{0}&6 set time to&f {1}");
+        config.set("commands.world.weather",  "{0}&6 weather set to&f {1}&6 for&f {2}&6 ticks");
         config.set("events.teleport.success", "&6Teleporting to&f {0}");
         try {
             config.save(file);

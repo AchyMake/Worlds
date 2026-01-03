@@ -113,6 +113,46 @@ public class WorldHandler {
             } else return false;
         } else return false;
     }
+    public void setMorning(World world) {
+        world.setTime(0);
+    }
+    public void setDay(World world) {
+        world.setTime(1000);
+    }
+    public void setNoon(World world) {
+        world.setTime(6000);
+    }
+    public void setNight(World world) {
+        world.setTime(13000);
+    }
+    public void setMidnight(World world) {
+        world.setTime(18000);
+    }
+    public void setTime(World world, long value) {
+        world.setTime(value);
+    }
+    public void addTime(World world, long value) {
+        world.setTime(world.getTime() + value);
+    }
+    public void removeTime(World world, long value) {
+        world.setTime(world.getTime() - value);
+    }
+    public void setClearWeatherDuration(World world, int value) {
+        setStorm(world, false);
+        world.setWeatherDuration(value);
+    }
+    public void setRainWeatherDuration(World world, int value) {
+        setStorm(world, true);
+        world.setWeatherDuration(value);
+    }
+    public void setThunderDuration(World world, int value) {
+        setStorm(world, true);
+        world.setThunderDuration(value);
+        world.setWeatherDuration(value);
+    }
+    public void setStorm(World world, boolean value) {
+        world.setStorm(value);
+    }
     public void remove(String worldName) {
         var world = get(worldName);
         if (world != null) {

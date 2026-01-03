@@ -12,7 +12,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class WorldCommand implements CommandExecutor, TabCompleter {
@@ -100,6 +99,23 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         } else player.sendMessage(getMessage().get("commands.world.difficulty.invalid", args[2]));
                     } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
                     return true;
+                } else if (args[0].equalsIgnoreCase("weather")) {
+                    var world = getWorldHandler().get(args[1]);
+                    if (world != null) {
+                        if (args[2].equalsIgnoreCase("clear")) {
+                            getWorldHandler().setClearWeatherDuration(world, 0);
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], "0"));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("rain")) {
+                            getWorldHandler().setRainWeatherDuration(world, 0);
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], "0"));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("thunder")) {
+                            getWorldHandler().setThunderDuration(world, 0);
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], "0"));
+                            return true;
+                        }
+                    }
                 }
             } else if (args.length == 4) {
                 if (args[0].equalsIgnoreCase("create")) {
@@ -126,6 +142,58 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(getMessage().get("commands.world.gamerule.changed", args[1], args[2], args[3]));
                     } else player.sendMessage(getMessage().get("error.world.invalid", args[1]));
                     return true;
+                } else if (args[0].equalsIgnoreCase("time")) {
+                    var world = getWorldHandler().get(args[1]);
+                    if (world != null) {
+                        if (args[2].equalsIgnoreCase("add")) {
+                            getWorldHandler().addTime(world, Integer.parseInt(args[3]));
+                            player.sendMessage(getMessage().get("commands.world.time.add", args[1], args[3]));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("remove")) {
+                            player.sendMessage(getMessage().get("commands.world.time.remove", args[1], args[3]));
+                            getWorldHandler().removeTime(world, Integer.parseInt(args[3]));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("set")) {
+                            if (args[3].equalsIgnoreCase("morning")) {
+                                getWorldHandler().setMorning(world);
+                                player.sendMessage(getMessage().get("commands.world.time.set", args[1], args[3]));
+                                return true;
+                            } else if (args[3].equalsIgnoreCase("day")) {
+                                getWorldHandler().setDay(world);
+                                player.sendMessage(getMessage().get("commands.world.time.set", args[1], args[3]));
+                                return true;
+                            } else if (args[3].equalsIgnoreCase("noon")) {
+                                getWorldHandler().setNoon(world);
+                                player.sendMessage(getMessage().get("commands.world.time.set", args[1], args[3]));
+                                return true;
+                            } else if (args[3].equalsIgnoreCase("night")) {
+                                getWorldHandler().setNight(world);
+                                player.sendMessage(getMessage().get("commands.world.time.set", args[1], args[3]));
+                                return true;
+                            } else if (args[3].equalsIgnoreCase("midnight")) {
+                                getWorldHandler().setMidnight(world);
+                                player.sendMessage(getMessage().get("commands.world.time.set", args[1], args[3]));
+                                return true;
+                            }
+                        }
+                    }
+                } else if (args[0].equalsIgnoreCase("weather")) {
+                    var world = getWorldHandler().get(args[1]);
+                    if (world != null) {
+                        if (args[2].equalsIgnoreCase("clear")) {
+                            getWorldHandler().setClearWeatherDuration(world, Integer.parseInt(args[3]));
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], args[3]));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("rain")) {
+                            getWorldHandler().setRainWeatherDuration(world, Integer.parseInt(args[3]));
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], args[3]));
+                            return true;
+                        } else if (args[2].equalsIgnoreCase("thunder")) {
+                            getWorldHandler().setThunderDuration(world, Integer.parseInt(args[3]));
+                            player.sendMessage(getMessage().get("commands.world.weather", args[1], args[2], args[3]));
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -136,45 +204,131 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         if (sender instanceof Player) {
             if (args.length == 1) {
-                commands.add("add");
-                commands.add("create");
-                commands.add("difficulty");
-                commands.add("info");
-                commands.add("gamerule");
-                commands.add("remove");
-                commands.add("setspawn");
-                commands.add("teleport");
+                for (var tabs : tab_1.values()) {
+                    var name = tabs.name();
+                    if (name.startsWith(args[0])) {
+                        commands.add(name);
+                    }
+                }
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("gamerule") ||
                         args[0].equalsIgnoreCase("remove") ||
                         args[0].equalsIgnoreCase("teleport") ||
                         args[0].equalsIgnoreCase("difficulty") ||
-                        args[0].equalsIgnoreCase("info")) {
-                    commands.addAll(getWorldHandler().getListed());
+                        args[0].equalsIgnoreCase("info") ||
+                        args[0].equalsIgnoreCase("time") ||
+                        args[0].equalsIgnoreCase("weather")) {
+                    for (var worlds : getWorldHandler().getListed()) {
+                        if (worlds.startsWith(args[1])) {
+                            commands.add(worlds);
+                        }
+                    }
                 }
             } else if (args.length == 3) {
-                if (args[0].equalsIgnoreCase("create")) {
-                    commands.add("normal");
-                    commands.add("nether");
-                    commands.add("the_end");
+                if (args[0].equalsIgnoreCase("weather")) {
+                    if (getWorldHandler().get(args[1]) != null) {
+                        for (var weather : weather_1.values()) {
+                            var name = weather.name();
+                            if (name.startsWith(args[2])) {
+                                commands.add(name);
+                            }
+                        }
+                    }
+                } else if (args[0].equalsIgnoreCase("create")) {
+                    for (var worldType : worldType.values()) {
+                        var name = worldType.name();
+                        if (name.startsWith(args[2])) {
+                            commands.add(name);
+                        }
+                    }
                 } else if (args[0].equalsIgnoreCase("difficulty")) {
                     if (getWorldHandler().get(args[1]) != null) {
-                        commands.add("peaceful");
-                        commands.add("easy");
-                        commands.add("normal");
-                        commands.add("hard");
+                        for (var difficulty : difficulty.values()) {
+                            var name = difficulty.name();
+                            if (name.startsWith(args[2])) {
+                                commands.add(name);
+                            }
+                        }
+                    }
+                } else if (args[0].equalsIgnoreCase("time")) {
+                    if (getWorldHandler().get(args[1]) != null) {
+                        for (var time_1 : time_1.values()) {
+                            var name = time_1.name();
+                            if (name.startsWith(args[2])) {
+                                commands.add(name);
+                            }
+                        }
                     }
                 } else if (args[0].equalsIgnoreCase("gamerule")) {
-                    Collections.addAll(commands, getWorldHandler().get(args[1]).getGameRules());
+                    for (var gamerule : getWorldHandler().get(args[1]).getGameRules()) {
+                        if (gamerule.startsWith(args[2])) {
+                            commands.add(gamerule);
+                        }
+                    }
                 }
             } else if (args.length == 4) {
-                if (args[0].equalsIgnoreCase("gamerule")) {
+                if (args[0].equalsIgnoreCase("weather")) {
+                    if (getWorldHandler().get(args[1]) != null) {
+                        commands.add("0");
+                    }
+                } else if (args[0].equalsIgnoreCase("gamerule")) {
                     commands.add(getWorldHandler().get(args[1]).getGameRuleValue(args[2]));
                 } else if (args[0].equalsIgnoreCase("create")) {
                     commands.add("random");
+                } else if (args[0].equalsIgnoreCase("time")) {
+                    if (args[2].equalsIgnoreCase("add") || args[2].equalsIgnoreCase("remove")) {
+                        commands.add("0");
+                    } else if (args[2].equalsIgnoreCase("set")) {
+                        for (var time_2 : time_2.values()) {
+                            var name = time_2.name();
+                            if (name.startsWith(args[3])) {
+                                commands.add(name);
+                            }
+                        }
+                    }
                 }
             }
         }
         return commands;
+    }
+    private enum tab_1 {
+        add,
+        create,
+        difficulty,
+        gamerule,
+        info,
+        remove,
+        setspawn,
+        teleport,
+        time,
+        weather
+    }
+    private enum worldType {
+        normal,
+        nether,
+        the_end
+    }
+    private enum difficulty {
+        peaceful,
+        easy,
+        normal,
+        hard
+    }
+    private enum time_1 {
+        add,
+        remove,
+        set
+    }
+    private enum time_2 {
+        morning,
+        day,
+        noon,
+        night,
+        midnight
+    }
+    private enum weather_1 {
+        clear,
+        rain,
+        thunder
     }
 }
