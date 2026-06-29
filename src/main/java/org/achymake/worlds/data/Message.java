@@ -18,12 +18,6 @@ public class Message {
     }
     private final File file = new File(getInstance().getDataFolder(), "message.yml");
     private FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-    public File getFile() {
-        return file;
-    }
-    public FileConfiguration getConfig() {
-        return config;
-    }
     public String get(String path) {
         if (config.isString(path)) {
             return addColor(config.getString(path));
@@ -84,15 +78,14 @@ public class Message {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
     public String toTitleCase(String string) {
+        var builder = getBuilder();
         if (string.contains(" ")) {
-            var builder = getBuilder();
             for (var strings : string.split(" ")) {
                 builder.append(strings.toUpperCase().charAt(0) + strings.substring(1).toLowerCase());
                 builder.append(" ");
             }
             return builder.toString().strip();
         } else if (string.contains("_")) {
-            var builder = getBuilder();
             for (var strings : string.split("_")) {
                 builder.append(strings.toUpperCase().charAt(0) + strings.substring(1).toLowerCase());
                 builder.append(" ");

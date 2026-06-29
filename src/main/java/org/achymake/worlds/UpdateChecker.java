@@ -35,7 +35,7 @@ public class UpdateChecker {
     public void getUpdate(Player player) {
         if (!player.hasPermission("worlds.event.join.update"))return;
         if (!getConfig().getBoolean("notify-update"))return;
-        getScheduleHandler().runLater(() -> getLatest((latest) -> {
+        getScheduleHandler().runTaskLater(() -> getLatest((latest) -> {
             if (getVersion().equals(latest))return;
             player.sendMessage(getMessage().addColor(getName() + "&6 has new update"));
             player.sendMessage(getMessage().addColor("-&a https://www.spigotmc.org/resources/" + getResourceID() + "/"));
@@ -43,7 +43,7 @@ public class UpdateChecker {
     }
     public void getUpdate() {
         if (!getConfig().getBoolean("notify-update"))return;
-        getScheduleHandler().runAsynchronously(() -> getLatest((latest) -> {
+        getScheduleHandler().runTaskAsynchronously(() -> getLatest((latest) -> {
             if (getVersion().equals(latest))return;
             getInstance().sendInfo(getName() + " has new update:");
             getInstance().sendInfo("- https://www.spigotmc.org/resources/" + getResourceID() + "/");
