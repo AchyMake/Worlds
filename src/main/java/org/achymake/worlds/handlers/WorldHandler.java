@@ -32,7 +32,8 @@ public class WorldHandler {
         return getInstance().getServer().getWorld(worldName);
     }
     public File getWorldFolder(String worldName) {
-        return new File(getInstance().getServer().getWorldContainer() + "world/dimensions/minecraft", worldName);
+        var server = getInstance().getServer();
+        return new File(server.getWorldContainer().getPath() + "/" + server.getWorlds().getFirst().getName() + "/dimensions/minecraft", worldName);
     }
     public List<String> getListed() {
         var listed = new ArrayList<String>();
