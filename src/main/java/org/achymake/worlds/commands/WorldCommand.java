@@ -127,6 +127,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(getMessage().get("creator.environment", worldInfo.getEnvironment().name()));
                             player.sendMessage(getMessage().get("creator.seed", String.valueOf(worldInfo.getSeed())));
                         } else player.sendMessage(getMessage().get("error.world.folder.exists", args[1]));
+                        return true;
                     } else if (!getWorldHandler().getWorldFolder(args[1]).exists()) {
                         player.sendMessage(getMessage().get("creator.post", args[1]));
                         var worldInfo = getCreatorHandler().create(args[1], World.Environment.valueOf(args[2].toUpperCase()), Long.parseLong(args[3]));
