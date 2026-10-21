@@ -1,7 +1,7 @@
 name: Worlds
 version: '${project.version}'
 main: org.achymake.worlds.Worlds
-api-version: '26.2'
+api-version: '26.3'
 prefix: '${project.name}'
 load: POSTWORLD
 author: AchyMake
@@ -22,6 +22,9 @@ permissions:
     default: op
   worlds.command.worlds:
     description: worlds command
+    default: op
+  worlds.command.worlds.reload:
+    description: worlds reload command
     default: op
   worlds.event.join.update:
     description: gets updates on join
